@@ -1,254 +1,74 @@
 "use client";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { useRef } from "react";
+import Reveal from "@/components/ui/Reveal";
+import ScrollFloat from "@/components/ui/ScrollFloat";
+import { CASES } from "@/lib/constants";
 
-import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  BarChart3,
-  Search,
-  TrendingUp,
-  Camera,
-} from "lucide-react";
+function Case({ c, flip }: { c: (typeof CASES)[number]; flip: boolean }) {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const numY = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
-const ease = [0.22, 1, 0.36, 1] as const;
+  const onMove = (e: React.PointerEvent<HTMLElement>) => {
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    el.style.setProperty("--my", `${e.clientY - r.top}px`);
+  };
 
-const caseStudies = [
-  {
-    number: "01",
-    category: "SEO / Organic Growth",
-    client: "Maxline",
-    industry: "Logistics",
-    title: "Turning search visibility into qualified logistics demand.",
-    description:
-      "A technical SEO overhaul, local search optimisation, and content authority strategy designed around high-intent searches in the competitive Dubai logistics market.",
-    result: "600%",
-    resultLabel: "increase in organic traffic",
-    timeframe: "within 2 months",
-    icon: Search,
-    tags: ["Technical SEO", "Local SEO", "Content Strategy"],
-  },
-  {
-    number: "02",
-    category: "Organic Social Media",
-    client: "Film Protection",
-    industry: "Automotive",
-    title: "Turning content attention into measurable enquiries.",
-    description:
-      "A focused content strategy built around audience behaviour, concise creative, organic SEO, and answer-focused content to generate more qualified Instagram enquiries.",
-    result: "5X",
-    resultLabel: "lead growth",
-    timeframe: "through organic marketing",
-    icon: Camera,
-    tags: ["Social Strategy", "AEO", "Content"],
-  },
-];
+  const result = `${c.resultValue} ${c.resultLabel}${c.resultNote ? `; ${c.resultNote.charAt(0).toLowerCase()}${c.resultNote.slice(1)}` : ""}`;
+  const rows = [{ k: "Goal", v: c.goal }, { k: "Solution", v: c.solution }, { k: "Result", v: result }];
+
+  return (
+    <Reveal amount={0.1}>
+      <article ref={ref} onPointerMove={onMove} className="group relative overflow-hidden rounded-[2rem] border border-white/[0.09] bg-gradient-to-br from-navy/60 via-dark to-dark" style={{ ["--mx" as string]: "50%", ["--my" as string]: "0%" }}>
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100 [background:radial-gradient(500px_circle_at_var(--mx)_var(--my),rgb(143_44_244/0.22),transparent_60%)]" />
+        <div className={`relative grid gap-10 p-6 sm:p-10 lg:grid-cols-2 lg:gap-16 lg:p-14 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}>
+          <div className="relative flex flex-col justify-between gap-8">
+            <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-white/45">
+              <span className="text-purple-secondary">{c.number}</span><span className="h-px w-8 bg-white/20" /><span>{c.industry}</span>
+            </div>
+            <motion.p style={{ y: reduce ? 0 : numY }} aria-label={`${c.resultValue} ${c.resultLabel}`} className="text-gradient text-[clamp(5.5rem,17vw,12.5rem)] font-semibold leading-[0.82] tracking-[-0.07em]">{c.resultValue}</motion.p>
+            <p className="max-w-sm text-lg font-medium leading-snug tracking-[-0.02em] text-white">{c.resultLabel}</p>
+          </div>
+          <div className="flex flex-col justify-between gap-10">
+            <div><p className="eyebrow">Client</p><h3 className="display mt-2 text-[clamp(2rem,4vw,3.2rem)] text-white">{c.client}</h3></div>
+            <dl className="divide-y divide-white/[0.09] border-y border-white/[0.09]">
+              {rows.map((r) => (
+                <div key={r.k} className="grid gap-2 py-5 sm:grid-cols-[110px_1fr] sm:gap-6">
+                  <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-purple-secondary">{r.k}</dt>
+                  <dd className="text-[15px] leading-7 text-muted">{r.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </article>
+    </Reveal>
+  );
+}
 
 export default function CaseStudies() {
   return (
-    <section
-      id="case-studies"
-      className="relative overflow-hidden bg-[#0D1420] py-28 sm:py-32 lg:py-40"
-    >
-      {/* Background */}
-      <div className="pointer-events-none absolute left-[-20%] top-[30%] h-[500px] w-[500px] rounded-full bg-[#4D11A8]/10 blur-[140px]" />
-
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease }}
-          >
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-[#8F2CF4]" />
-
-              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8F2CF4]">
-                Selected Work
-              </span>
-            </div>
-
-            <h2 className="mt-6 text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
-              Real campaigns.
-              <br />
-              <span className="text-white/35">Real results.</span>
-            </h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.1, ease }}
-            className="lg:pt-12"
-          >
-            <p className="max-w-2xl text-base leading-8 text-white/50 sm:text-lg">
-              We don't believe in marketing activity for the sake of activity.
-              Every strategy is built around a measurable business outcome —
-              from stronger organic visibility to more qualified enquiries.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Case Studies */}
-        <div className="mt-20 space-y-6">
-          {caseStudies.map((study, index) => {
-            const Icon = study.icon;
-
-            return (
-              <motion.article
-                key={study.client}
-                initial={{ opacity: 0, y: 35 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{
-                  duration: 0.7,
-                  delay: index * 0.1,
-                  ease,
-                }}
-                className="group relative overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#170349]/20"
-              >
-                {/* Hover glow */}
-                <div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-[#8F2CF4]/10 opacity-0 blur-[100px] transition-opacity duration-700 group-hover:opacity-100" />
-
-                <div className="relative grid lg:grid-cols-[1.1fr_0.9fr]">
-                  {/* Main content */}
-                  <div className="p-7 sm:p-10 lg:p-14">
-                    <div className="flex items-start justify-between gap-5">
-                      <div>
-                        <div className="flex flex-wrap items-center gap-3">
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8F2CF4]">
-                            {study.category}
-                          </span>
-
-                          <span className="h-1 w-1 rounded-full bg-white/20" />
-
-                          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/30">
-                            {study.industry}
-                          </span>
-                        </div>
-
-                        <div className="mt-5 flex items-center gap-4">
-                          <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.025]">
-                            <Icon
-                              size={20}
-                              strokeWidth={1.5}
-                              className="text-[#8F2CF4]"
-                            />
-                          </div>
-
-                          <div>
-                            <p className="text-xs text-white/30">Client</p>
-
-                            <h3 className="text-xl font-semibold tracking-[-0.03em] text-white">
-                              {study.client}
-                            </h3>
-                          </div>
-                        </div>
-                      </div>
-
-                      <span className="text-xs font-medium tracking-[0.15em] text-white/20">
-                        {study.number}
-                      </span>
-                    </div>
-
-                    <h4 className="mt-10 max-w-2xl text-2xl font-semibold leading-[1.15] tracking-[-0.04em] text-white sm:text-3xl lg:text-4xl">
-                      {study.title}
-                    </h4>
-
-                    <p className="mt-5 max-w-2xl text-sm leading-7 text-white/40 sm:text-[15px]">
-                      {study.description}
-                    </p>
-
-                    <div className="mt-8 flex flex-wrap gap-2">
-                      {study.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.1em] text-white/35"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Result panel */}
-                  <div className="relative flex min-h-[320px] items-center overflow-hidden border-t border-white/[0.08] bg-gradient-to-br from-[#4D11A8]/20 via-[#170349]/30 to-[#0D1420] p-8 sm:p-10 lg:min-h-full lg:border-l lg:border-t-0 lg:p-14">
-                    {/* Decorative circles */}
-                    <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full border border-[#8F2CF4]/10" />
-
-                    <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full border border-[#8F2CF4]/10" />
-
-                    <div className="relative w-full">
-                      <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30">
-                        <TrendingUp
-                          size={13}
-                          className="text-[#8F2CF4]"
-                        />
-                        Campaign result
-                      </div>
-
-                      <div className="mt-5">
-                        <span className="bg-gradient-to-r from-[#8F2CF4] via-[#6620EE] to-[#8F2CF4] bg-clip-text text-6xl font-semibold tracking-[-0.07em] text-transparent sm:text-7xl">
-                          {study.result}
-                        </span>
-                      </div>
-
-                      <p className="mt-2 max-w-xs text-lg font-medium tracking-[-0.02em] text-white">
-                        {study.resultLabel}
-                      </p>
-
-                      <p className="mt-2 text-xs text-white/30">
-                        {study.timeframe}
-                      </p>
-
-                      <div className="mt-10 h-px w-full bg-white/[0.08]" />
-
-                      <div className="mt-5 flex items-center justify-between">
-                        <span className="text-xs text-white/25">
-                          View case study
-                        </span>
-
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 transition-all duration-300 group-hover:border-[#8F2CF4]/40 group-hover:bg-[#8F2CF4] group-hover:text-white">
-                          <ArrowUpRight size={17} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
-
-        {/* Bottom statement */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease }}
-          className="mt-12 flex flex-col gap-6 border-t border-white/[0.08] pt-8 sm:flex-row sm:items-center sm:justify-between"
-        >
-          <div className="flex items-center gap-3">
-            <BarChart3 size={17} className="text-[#8F2CF4]" />
-
-            <p className="text-sm text-white/35">
-              Your next growth story could be here.
-            </p>
+    <section id="case-studies" className="relative bg-dark py-28 sm:py-36">
+      <div className="pointer-events-none absolute left-[-20%] top-[25%] h-[600px] w-[600px] rounded-full bg-purple-accent/15 blur-[160px]" />
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="mb-14 flex flex-col justify-between gap-6 sm:mb-20 lg:flex-row lg:items-end">
+          <div>
+            <p className="eyebrow mb-4">Case studies</p>
+            <ScrollFloat containerClassName="!my-0" textClassName="display !text-[clamp(2.2rem,6vw,5rem)] !leading-[1.08] text-white">Real Campaigns. Real Results.</ScrollFloat>
           </div>
-
-          <a
-            href="#contact"
-            className="group inline-flex w-fit items-center gap-2 text-sm font-medium text-white transition-colors hover:text-[#8F2CF4]"
-          >
-            Start a conversation
-
-            <ArrowUpRight
-              size={16}
-              className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            />
-          </a>
-        </motion.div>
+          <Reveal>
+            <a href="#contact" className="group inline-flex items-center gap-2 text-sm font-medium text-white/70 transition-colors hover:text-white">
+              Start your own growth story
+              <ArrowUpRight size={16} className="text-purple-secondary transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+            </a>
+          </Reveal>
+        </div>
+        <div className="space-y-6 sm:space-y-8">{CASES.map((c, i) => (<Case key={c.number} c={c} flip={i % 2 === 1} />))}</div>
       </div>
     </section>
   );

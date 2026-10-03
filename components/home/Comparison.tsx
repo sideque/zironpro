@@ -1,315 +1,52 @@
 "use client";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check } from "lucide-react";
+import { useState } from "react";
+import Reveal from "@/components/ui/Reveal";
+import { COMPARISON, EASE } from "@/lib/constants";
 
-import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Check,
-  Clock3,
-  Layers3,
-  MoveRight,
-  Users,
-} from "lucide-react";
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
-const rows = [
-  {
-    feature: "Skill Coverage",
-    icon: Layers3,
-    ziron: "Design, Dev, Marketing & Print",
-    inHouse: "Limited to hires",
-    agencies: "Depends on agency",
-  },
-  {
-    feature: "Senior-Level Expertise",
-    icon: Users,
-    ziron: "Senior specialists",
-    inHouse: "Depends on team",
-    agencies: "Varies by agency",
-  },
-  {
-    feature: "Turnaround Time",
-    icon: Clock3,
-    ziron: "48 hours for most requests",
-    inHouse: "Weeks",
-    agencies: "Weeks",
-  },
-  {
-    feature: "Start Time",
-    icon: MoveRight,
-    ziron: "Same day",
-    inHouse: "Weeks to onboard",
-    agencies: "Days to set up",
-  },
-  {
-    feature: "Client Portal",
-    icon: Layers3,
-    ziron: "Yes",
-    inHouse: "Often less accessible",
-    agencies: "Not always available",
-  },
-  {
-    feature: "Scalability",
-    icon: ArrowUpRight,
-    ziron: "Scale up or down with ease",
-    inHouse: "Possible",
-    agencies: "Depends on agency",
-  },
-  {
-    feature: "Flexibility",
-    icon: MoveRight,
-    ziron: "Pause or adjust anytime",
-    inHouse: "Locked into salaries",
-    agencies: "Often contract-based",
-  },
-];
+const OPTIONS = [{ key: "inHouse", label: "In-House Team" }, { key: "agencies", label: "Other Agencies" }] as const;
 
 export default function Comparison() {
+  const [mode, setMode] = useState<(typeof OPTIONS)[number]["key"]>("inHouse");
+  const other = OPTIONS.find((o) => o.key === mode)!;
+
   return (
-    <section
-      id="comparison"
-      className="relative overflow-hidden bg-[#0D1420] py-28 sm:py-32 lg:py-40"
-    >
-      {/* Background glow */}
-      <div className="pointer-events-none absolute left-1/2 top-[30%] h-[450px] w-[700px] -translate-x-1/2 rounded-full bg-[#4D11A8]/10 blur-[150px]" />
-
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease }}
-          >
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-[#8F2CF4]" />
-
-              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8F2CF4]">
-                The Difference
-              </span>
-            </div>
-
-            <h2 className="mt-6 max-w-xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
-              One partner.
-              <br />
-              <span className="text-white/35">
-                Multiple capabilities.
-              </span>
-            </h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.1, ease }}
-            className="lg:pt-12"
-          >
-            <p className="max-w-2xl text-base leading-8 text-white/50 sm:text-lg">
-              Instead of building and managing multiple teams, ZironPro brings
-              strategy, creative, technology, performance, and execution
-              together under one growth partner.
-            </p>
-          </motion.div>
+    <section id="compare" className="relative overflow-hidden bg-dark py-28 sm:py-36">
+      <div className="pointer-events-none absolute left-1/2 top-1/3 h-[600px] w-[90vw] max-w-[1100px] -translate-x-1/2 rounded-full bg-purple-primary/20 blur-[170px]" />
+      <div className="relative mx-auto max-w-5xl px-5 sm:px-8 lg:px-10">
+        <div className="mb-12 text-center sm:mb-16">
+          <p className="eyebrow mb-4">The difference</p>
+          <h2 className="display text-[clamp(2.2rem,5.6vw,4.6rem)] text-white">ZironPro vs <span className="text-gradient">{other.label}</span></h2>
+          <div role="group" aria-label="Compare ZironPro against" className="mx-auto mt-8 inline-flex rounded-full border border-white/12 bg-white/[0.04] p-1">
+            {OPTIONS.map((o) => (
+              <button key={o.key} type="button" aria-pressed={mode === o.key} onClick={() => setMode(o.key)} className={`relative rounded-full px-5 py-2.5 text-[13px] font-medium transition-colors duration-300 ${mode === o.key ? "text-white" : "text-white/50 hover:text-white"}`}>
+                {mode === o.key && (<motion.span layoutId="cmp-pill" className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-primary to-purple-accent" transition={{ duration: 0.5, ease: EASE }} />)}
+                <span className="relative">{o.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Desktop comparison */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.8, delay: 0.1, ease }}
-          className="mt-20 hidden overflow-hidden rounded-[28px] border border-white/[0.08] bg-white/[0.015] lg:block"
-        >
-          {/* Table Header */}
-          <div className="grid grid-cols-[1.25fr_1fr_1fr_1fr] border-b border-white/[0.08]">
-            <div className="p-6">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/25">
-                Comparison
-              </span>
-            </div>
-
-            <div className="relative border-l border-white/[0.08] bg-[#4D11A8]/10 p-6">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#8F2CF4] to-transparent" />
-
-              <span className="text-sm font-semibold text-white">
-                ZironPro
-              </span>
-
-              <p className="mt-1 text-[10px] uppercase tracking-[0.12em] text-[#8F2CF4]">
-                Growth Partner
-              </p>
-            </div>
-
-            <div className="border-l border-white/[0.08] p-6">
-              <span className="text-sm font-medium text-white/60">
-                In-House Team
-              </span>
-            </div>
-
-            <div className="border-l border-white/[0.08] p-6">
-              <span className="text-sm font-medium text-white/60">
-                Other Agencies
-              </span>
-            </div>
-          </div>
-
-          {/* Rows */}
-          {rows.map((row, index) => {
-            const Icon = row.icon;
-
-            return (
-              <div
-                key={row.feature}
-                className="group grid grid-cols-[1.25fr_1fr_1fr_1fr] border-b border-white/[0.06] last:border-b-0"
-              >
-                {/* Feature */}
-                <div className="flex items-center gap-4 p-6">
-                  <Icon
-                    size={17}
-                    strokeWidth={1.5}
-                    className="text-white/25 transition-colors duration-300 group-hover:text-[#8F2CF4]"
-                  />
-
-                  <span className="text-sm font-medium text-white/65">
-                    {row.feature}
-                  </span>
+        <ul className="space-y-3">
+          {COMPARISON.map((row, i) => (
+            <Reveal as="li" key={row.feature} delay={i * 0.05} y={20}>
+              <div className="grid overflow-hidden rounded-3xl border border-white/[0.09] bg-white/[0.02] md:grid-cols-[0.8fr_1.2fr_1fr]">
+                <div className="px-6 pb-1 pt-5 md:py-6"><p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/45">{row.feature}</p></div>
+                <div className="bg-gradient-to-r from-purple-primary/70 to-purple-accent/50 px-6 py-5 md:py-6">
+                  <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 md:hidden">ZironPro</p>
+                  <p className="flex items-start gap-3 text-[15px] font-medium text-white"><Check size={17} className="mt-0.5 shrink-0" aria-hidden="true" />{row.ziron}</p>
                 </div>
-
-                {/* ZironPro */}
-                <div className="flex items-center gap-3 border-l border-white/[0.06] bg-[#4D11A8]/[0.035] p-6">
-                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#8F2CF4]/15">
-                    <Check
-                      size={12}
-                      strokeWidth={2.5}
-                      className="text-[#8F2CF4]"
-                    />
-                  </div>
-
-                  <span className="text-sm text-white/70">
-                    {row.ziron}
-                  </span>
-                </div>
-
-                {/* In-house */}
-                <div className="border-l border-white/[0.06] p-6">
-                  <span className="text-sm text-white/30">
-                    {row.inHouse}
-                  </span>
-                </div>
-
-                {/* Other agencies */}
-                <div className="border-l border-white/[0.06] p-6">
-                  <span className="text-sm text-white/30">
-                    {row.agencies}
-                  </span>
+                <div className="px-6 py-5 md:py-6">
+                  <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 md:hidden">{other.label}</p>
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.p key={mode} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3, ease: EASE }} className="text-[15px] text-white/45">{row[mode]}</motion.p>
+                  </AnimatePresence>
                 </div>
               </div>
-            );
-          })}
-        </motion.div>
-
-        {/* Mobile cards */}
-        <div className="mt-16 space-y-4 lg:hidden">
-          {rows.map((row, index) => {
-            const Icon = row.icon;
-
-            return (
-              <motion.div
-                key={row.feature}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.05,
-                  ease,
-                }}
-                className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.015]"
-              >
-                <div className="flex items-center gap-3 border-b border-white/[0.07] p-5">
-                  <Icon
-                    size={17}
-                    className="text-[#8F2CF4]"
-                    strokeWidth={1.5}
-                  />
-
-                  <span className="text-sm font-semibold text-white">
-                    {row.feature}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1">
-                  <div className="bg-[#4D11A8]/10 p-5">
-                    <div className="mb-2 flex items-center gap-2">
-                      <Check
-                        size={13}
-                        className="text-[#8F2CF4]"
-                      />
-
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#8F2CF4]">
-                        ZironPro
-                      </span>
-                    </div>
-
-                    <p className="text-sm text-white/70">
-                      {row.ziron}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 divide-x divide-white/[0.06] border-t border-white/[0.06]">
-                    <div className="p-5">
-                      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/20">
-                        In-House
-                      </p>
-
-                      <p className="text-xs leading-5 text-white/30">
-                        {row.inHouse}
-                      </p>
-                    </div>
-
-                    <div className="p-5">
-                      <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/20">
-                        Other Agencies
-                      </p>
-
-                      <p className="text-xs leading-5 text-white/30">
-                        {row.agencies}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease }}
-          className="mt-12 flex flex-col gap-6 border-t border-white/[0.08] pt-8 sm:flex-row sm:items-center sm:justify-between"
-        >
-          <p className="max-w-xl text-sm leading-6 text-white/30">
-            Need flexibility without building an entire marketing department?
-            Let's create the right team around your goals.
-          </p>
-
-          <a
-            href="#contact"
-            className="group inline-flex w-fit items-center gap-3 rounded-full bg-[#4D11A8] px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#6620EE] hover:shadow-xl hover:shadow-[#4D11A8]/20"
-          >
-            Build Your Growth Team
-
-            <ArrowUpRight
-              size={16}
-              className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            />
-          </a>
-        </motion.div>
+            </Reveal>
+          ))}
+        </ul>
       </div>
     </section>
   );

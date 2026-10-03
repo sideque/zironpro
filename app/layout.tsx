@@ -1,27 +1,24 @@
-import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import "./globals.css";
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  display: "swap",
-});
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "ZironPro | Digital Marketing Agency Dubai",
-  description:
-    "ZironPro is a digital marketing agency helping businesses across Dubai and the UAE grow through SEO, paid media, social media, branding, web development and AI-driven marketing.",
+  title: "ZironPro — Marketing Agency in Dubai & the UAE",
+  description: "ZironPro is an AI-powered marketing agency in Dubai helping businesses across the UAE attract the right audience, convert leads into customers, and build lasting brand authority.",
 };
+export const viewport: Viewport = { themeColor: "#0D1420", width: "device-width", initialScale: 1 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={manrope.variable}>{children}</body>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className="antialiased">
+        <Navbar />
+        <main id="main">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

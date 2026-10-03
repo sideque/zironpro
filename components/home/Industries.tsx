@@ -1,211 +1,64 @@
 "use client";
-
-import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Building2,
-  GraduationCap,
-  HeartPulse,
-  Hotel,
-  Truck,
-} from "lucide-react";
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
-const industries = [
-  {
-    number: "01",
-    title: "Logistics",
-    icon: Truck,
-    description:
-      "Lead generation and brand visibility for freight, courier, and supply chain businesses across the UAE. We build SEO and B2B campaigns that put your services in front of decision-makers actively searching for logistics partners.",
-    tags: ["B2B", "SEO", "Lead Generation"],
-  },
-  {
-    number: "02",
-    title: "Beauty & Clinics",
-    icon: HeartPulse,
-    description:
-      "Patient acquisition campaigns for aesthetic clinics, dermatology centers, and wellness brands. From Instagram-driven booking funnels to high-intent Google Ads, we help fill appointment calendars with qualified clients.",
-    tags: ["Google Ads", "Social", "Bookings"],
-  },
-  {
-    number: "03",
-    title: "Hospitality",
-    icon: Hotel,
-    description:
-      "Direct booking growth for hotels, resorts, and F&B brands across the UAE. We combine paid media, local SEO, content, and reputation management to help properties generate more direct demand.",
-    tags: ["Hotels", "F&B", "Local SEO"],
-  },
-  {
-    number: "04",
-    title: "Education",
-    icon: GraduationCap,
-    description:
-      "Enrollment-focused campaigns for schools, universities, and training institutes. We build lead-nurturing systems that guide prospective students and parents from their first enquiry to enrollment.",
-    tags: ["Admissions", "SEO", "Funnels"],
-  },
-  {
-    number: "05",
-    title: "Real Estate",
-    icon: Building2,
-    description:
-      "Buyer and investor lead generation for developers, brokerages, and property businesses across Dubai and the UAE. Our campaigns focus on high-value leads and conversion-ready landing experiences.",
-    tags: ["Property", "Performance", "Leads"],
-  },
-];
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import CTAButton from "@/components/ui/CTAButton";
+import Reveal from "@/components/ui/Reveal";
+import ScrollFloat from "@/components/ui/ScrollFloat";
+import { EASE, INDUSTRIES } from "@/lib/constants";
+import IndustryVisual from "./IndustryVisual";
 
 export default function Industries() {
+  const [active, setActive] = useState(0);
+  const cur = INDUSTRIES[active];
+
   return (
-    <section
-      id="industries"
-      className="relative overflow-hidden bg-[#0D1420] py-28 sm:py-32 lg:py-40"
-    >
-      {/* Background glow */}
-      <div className="pointer-events-none absolute right-[-15%] top-[20%] h-[500px] w-[500px] rounded-full bg-[#4D11A8]/10 blur-[140px]" />
+    <section id="industries" className="relative bg-dark py-28 sm:py-36">
+      <div className="pointer-events-none absolute right-[-20%] top-[10%] h-[600px] w-[600px] rounded-full bg-purple-primary/20 blur-[150px]" />
+      <div className="relative mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-10">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <p className="eyebrow mb-4">Industries</p>
+          <ScrollFloat containerClassName="!my-0" textClassName="display !text-[clamp(2.5rem,6.2vw,5rem)] !leading-[1.08] text-white">Industries We Grow</ScrollFloat>
+          <Reveal>
+            <p className="mt-6 max-w-md text-base leading-7 text-muted">As a digital marketing agency in the UAE, we don&apos;t run generic campaigns. Every industry has its own buyer behaviour, sales cycle, and channels that actually convert. Our strategies are built around how your customers really make decisions.</p>
+          </Reveal>
 
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease }}
-          >
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-[#8F2CF4]" />
-
-              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8F2CF4]">
-                Industries We Grow
-              </span>
-            </div>
-
-            <h2 className="mt-6 max-w-lg text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
-              Marketing built
-              <br />
-              <span className="text-white/35">around your industry.</span>
-            </h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.1, ease }}
-            className="lg:pt-12"
-          >
-            <p className="max-w-2xl text-base leading-8 text-white/50 sm:text-lg">
-              As a digital marketing agency in the UAE, we don't run generic
-              campaigns. Every industry has its own buyer behaviour, sales
-              cycle, and channels that actually convert. Our strategies are
-              built around how your customers really make decisions.
-            </p>
-          </motion.div>
+          <div role="tablist" aria-label="Industries" aria-orientation="vertical" className="-mx-5 mt-10 flex gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none] lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
+            {INDUSTRIES.map((ind, i) => {
+              const on = i === active;
+              return (
+                <button key={ind.title} role="tab" id={`ind-tab-${i}`} aria-selected={on} aria-controls="ind-panel" tabIndex={on ? 0 : -1}
+                  onClick={() => setActive(i)}
+                  onMouseEnter={() => window.matchMedia("(hover: hover)").matches && setActive(i)}
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowDown" || e.key === "ArrowRight") setActive((i + 1) % INDUSTRIES.length);
+                    if (e.key === "ArrowUp" || e.key === "ArrowLeft") setActive((i - 1 + INDUSTRIES.length) % INDUSTRIES.length);
+                  }}
+                  className={`group relative shrink-0 rounded-full border px-5 py-3 text-left transition-all duration-500 lg:flex lg:items-center lg:gap-5 lg:rounded-none lg:border-0 lg:border-b lg:border-white/[0.08] lg:bg-transparent lg:px-0 lg:py-5 ${on ? "border-purple-secondary/60 bg-purple-secondary/15 text-white" : "border-white/10 text-white/45 hover:text-white"}`}>
+                  <span className={`hidden font-mono text-[11px] lg:inline ${on ? "text-purple-secondary" : "text-white/25"}`}>{ind.number}</span>
+                  <span className={`whitespace-nowrap text-sm font-medium tracking-tight transition-transform duration-500 lg:text-2xl lg:tracking-[-0.03em] ${on ? "lg:translate-x-3" : ""}`}>{ind.title}</span>
+                  <span aria-hidden="true" className={`ml-auto hidden h-px bg-purple-secondary transition-all duration-500 lg:block ${on ? "w-14" : "w-0"}`} />
+                </button>
+              );
+            })}
+          </div>
+          <div className="mt-10"><CTAButton href="/#contact" variant="ghost" magnetic={false}>Find Your Industry Strategy →</CTAButton></div>
         </div>
 
-        {/* Industry Cards */}
-        <div className="mt-20 border-t border-white/[0.08]">
-          {industries.map((industry, index) => {
-            const Icon = industry.icon;
-
-            return (
-              <motion.article
-                key={industry.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{
-                  duration: 0.65,
-                  delay: index * 0.06,
-                  ease,
-                }}
-                className="group relative border-b border-white/[0.08] py-9 sm:py-11 lg:py-12"
-              >
-                <div className="grid items-start gap-7 lg:grid-cols-[70px_280px_1fr_50px] lg:gap-10">
-                  {/* Number */}
-                  <div className="text-xs font-medium tracking-[0.15em] text-white/25">
-                    {industry.number}
-                  </div>
-
-                  {/* Title */}
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.025] transition-all duration-500 group-hover:border-[#8F2CF4]/30 group-hover:bg-[#8F2CF4]/10">
-                      <Icon
-                        size={20}
-                        strokeWidth={1.5}
-                        className="text-white/55 transition-colors duration-500 group-hover:text-[#8F2CF4]"
-                      />
-                    </div>
-
-                    <h3 className="text-xl font-semibold tracking-[-0.03em] text-white sm:text-2xl">
-                      {industry.title}
-                    </h3>
-                  </div>
-
-                  {/* Content */}
-                  <div>
-                    <p className="max-w-2xl text-sm leading-7 text-white/40 sm:text-[15px]">
-                      {industry.description}
-                    </p>
-
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {industry.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white/35 transition-colors duration-300 group-hover:border-[#8F2CF4]/15 group-hover:text-white/50"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Arrow */}
-                  <div className="hidden lg:flex lg:justify-end">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] text-white/30 transition-all duration-500 group-hover:border-[#8F2CF4]/30 group-hover:bg-[#8F2CF4] group-hover:text-white">
-                      <ArrowUpRight size={17} />
-                    </div>
-                  </div>
+        <div role="tabpanel" id="ind-panel" aria-labelledby={`ind-tab-${active}`} className="relative min-h-[520px] overflow-hidden rounded-[2rem] border border-white/[0.09] bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-6 sm:p-10">
+          <AnimatePresence mode="wait">
+            <motion.div key={cur.title} initial={{ opacity: 0, y: 24, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -16, filter: "blur(6px)" }} transition={{ duration: 0.55, ease: EASE }} className="flex h-full flex-col">
+              <div className="flex items-start justify-between">
+                <span className="text-outline text-[clamp(4rem,10vw,8rem)] font-bold leading-[0.85] tracking-[-0.06em]">{cur.number}</span>
+                <div className="flex flex-wrap justify-end gap-2">
+                  {cur.tags.map((t) => (<span key={t} className="rounded-full border border-white/12 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">{t}</span>))}
                 </div>
-
-                {/* Hover line */}
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "0%" }}
-                  className="absolute bottom-0 left-0 h-px bg-gradient-to-r from-[#4D11A8] via-[#8F2CF4] to-transparent"
-                />
-
-                <div className="pointer-events-none absolute inset-y-0 left-0 -z-0 w-0 bg-gradient-to-r from-[#8F2CF4]/[0.025] to-transparent transition-all duration-700 group-hover:w-full" />
-              </motion.article>
-            );
-          })}
+              </div>
+              <div className="relative my-4 aspect-[4/2.6] w-full"><IndustryVisual index={active} /></div>
+              <h3 className="display text-[clamp(2rem,4.4vw,3.4rem)] text-white">{cur.title}</h3>
+              <p className="mt-4 max-w-xl text-[15px] leading-7 text-muted">{cur.description}</p>
+            </motion.div>
+          </AnimatePresence>
         </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.15, ease }}
-          className="mt-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-center"
-        >
-          <p className="max-w-md text-sm leading-6 text-white/30">
-            Don't see your industry? We work with ambitious businesses across
-            the UAE looking for measurable growth.
-          </p>
-
-          <a
-            href="#contact"
-            className="group inline-flex w-fit items-center gap-3 rounded-full border border-white/10 px-5 py-3 text-sm font-medium text-white transition-all duration-300 hover:border-[#8F2CF4]/30 hover:bg-[#8F2CF4]/10"
-          >
-            Find Your Industry Strategy
-            <ArrowUpRight
-              size={16}
-              className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-            />
-          </a>
-        </motion.div>
       </div>
     </section>
   );

@@ -1,231 +1,39 @@
-"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { CONTACT, INDUSTRIES, NAV_ITEMS, SERVICES } from "@/lib/constants";
 
-import { motion } from "framer-motion";
-import {
-  ArrowUpRight,
-  Camera,
-  Link2,
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
-
-const ease = [0.22, 1, 0.36, 1] as const;
-
-const services = [
-  { label: "Digital Marketing", href: "/services/digital-marketing" },
-  { label: "SEO", href: "/services/seo" },
-  { label: "Web Development", href: "/services/web-development" },
-  { label: "App Development", href: "/services/app-development" },
-  { label: "Paid Media", href: "/services/paid-media" },
-  { label: "Video Production", href: "/services/video-production" },
-];
-
-const company = [
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Blogs", href: "/blogs" },
-  { label: "Careers", href: "/careers" },
-  { label: "Contact", href: "/contact" },
-];
+const link = "text-sm text-white/50 transition-colors duration-300 hover:text-white";
+const head = "mb-5 font-mono text-[11px] uppercase tracking-[0.2em] text-purple-secondary";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#0D1420]">
-      {/* Top border */}
-      <div className="h-px w-full bg-white/[0.08]" />
-
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        {/* Main footer */}
-        <div className="grid gap-14 py-20 lg:grid-cols-[1.4fr_0.8fr_0.8fr_1fr] lg:gap-16 lg:py-24">
-          {/* Brand */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease }}
-          >
-            <a href="/" className="inline-flex items-center">
-              <span className="text-2xl font-bold tracking-[-0.04em] text-white">
-                Ziron
-                <span className="text-[#8F2CF4]">Pro</span>
-              </span>
-            </a>
-
-            <p className="mt-6 max-w-sm text-sm leading-7 text-white/35">
-              A digital growth partner helping ambitious businesses across
-              Dubai and the UAE build stronger brands, generate demand, and
-              turn digital activity into measurable growth.
-            </p>
-
-            {/* Social */}
-            <div className="mt-7 flex items-center gap-3">
-              <a
-                href="#"
-                aria-label="LinkedIn"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] text-white/35 transition-all duration-300 hover:border-[#8F2CF4]/30 hover:bg-[#8F2CF4]/10 hover:text-[#8F2CF4]"
-              >
-                <Link2 size={16} />
-              </a>
-
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] text-white/35 transition-all duration-300 hover:border-[#8F2CF4]/30 hover:bg-[#8F2CF4]/10 hover:text-[#8F2CF4]"
-              >
-                <Camera size={16} />
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Services */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.08, ease }}
-          >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/25">
-              Services
-            </p>
-
-            <div className="mt-6 space-y-3.5">
-              {services.map((service) => (
-                <a
-                  key={service.label}
-                  href={service.href}
-                  className="group flex w-fit items-center gap-2 text-sm text-white/40 transition-colors duration-300 hover:text-white"
-                >
-                  {service.label}
-
-                  <ArrowUpRight
-                    size={12}
-                    className="opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
-                  />
-                </a>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Company */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.16, ease }}
-          >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/25">
-              Company
-            </p>
-
-            <div className="mt-6 space-y-3.5">
-              {company.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="group flex w-fit items-center gap-2 text-sm text-white/40 transition-colors duration-300 hover:text-white"
-                >
-                  {item.label}
-
-                  <ArrowUpRight
-                    size={12}
-                    className="opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
-                  />
-                </a>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Contact */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.24, ease }}
-          >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/25">
-              Get in touch
-            </p>
-
-            <div className="mt-6 space-y-5">
-              <a
-                href="mailto:info@zironpro.com"
-                className="group flex items-start gap-3"
-              >
-                <Mail
-                  size={16}
-                  className="mt-0.5 shrink-0 text-[#8F2CF4]"
-                  strokeWidth={1.5}
-                />
-
-                <span className="text-sm text-white/40 transition-colors group-hover:text-white">
-                  info@zironpro.com
-                </span>
-              </a>
-
-              <a
-                href="tel:+971000000000"
-                className="group flex items-start gap-3"
-              >
-                <Phone
-                  size={16}
-                  className="mt-0.5 shrink-0 text-[#8F2CF4]"
-                  strokeWidth={1.5}
-                />
-
-                <span className="text-sm text-white/40 transition-colors group-hover:text-white">
-                  +971 XX XXX XXXX
-                </span>
-              </a>
-
-              <div className="flex items-start gap-3">
-                <MapPin
-                  size={16}
-                  className="mt-0.5 shrink-0 text-[#8F2CF4]"
-                  strokeWidth={1.5}
-                />
-
-                <span className="text-sm leading-6 text-white/40">
-                  Dubai, United Arab Emirates
-                </span>
-              </div>
-            </div>
-
-            <a
-              href="/contact"
-              className="group mt-7 inline-flex items-center gap-2 rounded-full bg-[#4D11A8] px-5 py-3 text-xs font-semibold text-white transition-all duration-300 hover:bg-[#6620EE] hover:shadow-lg hover:shadow-[#4D11A8]/20"
-            >
-              Start a conversation
-
-              <ArrowUpRight
-                size={14}
-                className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              />
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Bottom */}
-        <div className="flex flex-col gap-5 border-t border-white/[0.08] py-7 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-white/20">
-            © {new Date().getFullYear()} ZironPro. All rights reserved.
-          </p>
-
-          <div className="flex items-center gap-6">
-            <a
-              href="/privacy-policy"
-              className="text-xs text-white/20 transition-colors hover:text-white/50"
-            >
-              Privacy Policy
-            </a>
-
-            <a
-              href="/terms"
-              className="text-xs text-white/20 transition-colors hover:text-white/50"
-            >
-              Terms & Conditions
-            </a>
+    <footer className="relative overflow-hidden border-t border-white/[0.08] bg-gradient-to-b from-dark to-ink">
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 left-1/2 h-[400px] w-[80vw] max-w-[1000px] -translate-x-1/2 rounded-full bg-purple-primary/30 blur-[140px]" />
+      <div className="relative mx-auto max-w-7xl px-5 pb-8 pt-20 sm:px-8 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.2fr]">
+          <div>
+            <Image src="/brand/logo-horizontal.svg" alt="ZironPro" width={757} height={221} unoptimized className="h-12 w-auto" />
+            <p className="mt-6 max-w-xs text-sm leading-7 text-white/50">A marketing agency in Dubai helping businesses across the UAE attract the right audience, convert leads into customers, and build lasting brand authority.</p>
           </div>
+          <nav aria-label="Footer navigation"><p className={head}>Navigate</p><ul className="space-y-3">{NAV_ITEMS.map((n) => (<li key={n.label}><Link href={n.href} className={link}>{n.label}</Link></li>))}</ul></nav>
+          <div><p className={head}>Services</p><ul className="space-y-3">{SERVICES.slice(0, 6).map((s) => (<li key={s.title}><Link href="/#services" className={link}>{s.title}</Link></li>))}</ul></div>
+          <div><p className={head}>Industries</p><ul className="space-y-3">{INDUSTRIES.map((s) => (<li key={s.title}><Link href="/#industries" className={link}>{s.title}</Link></li>))}</ul></div>
+          <div>
+            <p className={head}>Contact</p>
+            <ul className="space-y-3">
+              <li><a href={`mailto:${CONTACT.email}`} className={link}>{CONTACT.email}</a></li>
+              <li className="text-sm text-white/50">{CONTACT.location}</li>
+              <li className="flex gap-5 pt-2">
+                {/* TODO: replace "#" with real social profile URLs */}
+                <a href="#" className={link} aria-label="ZironPro on LinkedIn">LinkedIn</a>
+                <a href="#" className={link} aria-label="ZironPro on Instagram">Instagram</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="mt-16 flex flex-col justify-between gap-3 border-t border-white/[0.08] pt-6 text-xs text-white/35 sm:flex-row">
+          <p>© {new Date().getFullYear()} ZironPro. All rights reserved.</p>
+          <p>Dubai · Abu Dhabi · UAE</p>
         </div>
       </div>
     </footer>

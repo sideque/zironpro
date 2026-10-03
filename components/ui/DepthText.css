@@ -1,0 +1,5 @@
+.depth-text { display: inline-block; perspective: 1100px; max-width: 100%; }
+.depth-text__stage { position: relative; display: inline-block; transform-style: preserve-3d; will-change: transform; line-height: 0.9; font-weight: 700; letter-spacing: -0.05em; white-space: nowrap; }
+.depth-text__layer { position: absolute; left: 0; top: 0; pointer-events: none; user-select: none; white-space: nowrap; }
+.depth-text__face { position: relative; display: block; }
+@media (prefers-reduced-motion: reduce) { .depth-text__stage { transform: none !important; } }
