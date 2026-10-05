@@ -31,10 +31,7 @@ export default function Hero() {
       className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-white pb-16 pt-28 md:pt-32"
       aria-label="Introduction"
     >
-      {/* =========================================================
-          IRIDESCENCE BACKGROUND
-      ========================================================== */}
-
+      {/* Iridescence Background */}
       <div className="pointer-events-none absolute inset-0 z-0">
         <Iridescence
           color={[0.32, 0.08, 0.65]}
@@ -44,13 +41,10 @@ export default function Hero() {
         />
       </div>
 
-      {/* =========================================================
-          BACKGROUND OVERLAY
-      ========================================================== */}
-
+      {/* Background Overlay */}
       <div className="pointer-events-none absolute inset-0 z-[1] bg-white/60" />
 
-      {/* Soft purple ambient glow */}
+      {/* Ambient Glow */}
       <div
         className="pointer-events-none absolute -right-32 -top-32 z-[2] h-[500px] w-[500px] rounded-full bg-[#F1EAFE]/40 blur-[100px]"
         aria-hidden="true"
@@ -61,21 +55,14 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* =========================================================
-          HERO CONTENT
-      ========================================================== */}
-
+      {/* Main Content */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
-
-          {/* =====================================================
-              LEFT CONTENT
-          ====================================================== */}
-
+          
+          {/* LEFT SIDE */}
           <div className="lg:col-span-7">
-
-            {/* EYEBROW */}
-
+            
+            {/* Eyebrow */}
             <motion.div
               {...enterAnimation(0.1)}
               className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#E7E2EF] bg-white/70 px-3.5 py-1.5 backdrop-blur-md"
@@ -87,18 +74,18 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* MAIN HEADING */}
+            {/* HERO HEADING */}
+            <motion.div {...enterAnimation(0.2)}>
+              <h1 className="max-w-4xl text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-[#151515] sm:text-6xl lg:text-7xl xl:text-[80px]">
+                We Turn Your Brand Into A
+                <span className="text-purple-gradient block">
+                  Revenue Machine
+                </span>
+              </h1>
+            </motion.div>
 
-            <h1 className="display-hero max-w-2xl font-bold tracking-tight text-[#151515]">
-              We Turn Your Brand Into A{" "}
-              <span className="text-purple-gradient relative inline-block">
-                Revenue Machine
-              </span>
-            </h1>
-
-            {/* SUBTITLE */}
-
-            <div className="mt-5 max-w-xl">
+            {/* Description */}
+            <div className="mt-6 max-w-xl">
               <BlurText
                 text="ZironPro is an AI-powered marketing agency in Dubai helping businesses across the UAE attract high-intent audiences, convert qualified leads, and scale sustainable revenue."
                 delay={25}
@@ -108,14 +95,12 @@ export default function Hero() {
               />
             </div>
 
-            {/* CTAS */}
-
+            {/* CTA */}
             <motion.div
               {...enterAnimation(0.4)}
               className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
             >
-              {/* PRIMARY CTA */}
-
+              {/* Primary */}
               <Link
                 href="/#contact"
                 className="group inline-flex items-center gap-3 rounded-full bg-[#4D11A8] px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#8F2CF4] hover:shadow-xl"
@@ -127,8 +112,7 @@ export default function Hero() {
                 </span>
               </Link>
 
-              {/* SECONDARY CTA */}
-
+              {/* Secondary */}
               <Link
                 href="/#case-studies"
                 className="group inline-flex items-center gap-2 rounded-full border border-[#E7E2EF] bg-white/70 px-6 py-3.5 text-sm font-semibold text-[#151515] backdrop-blur-md transition-all duration-300 hover:border-[#4D11A8]/40 hover:bg-white"
@@ -142,51 +126,38 @@ export default function Hero() {
               </Link>
             </motion.div>
 
-            {/* QUICK TRUST HIGHLIGHTS */}
-
+            {/* Trust Highlights */}
             <motion.div
               {...enterAnimation(0.55)}
               className="mt-10 flex flex-wrap items-center gap-6 border-t border-[#E7E2EF]/80 pt-6 text-xs font-medium text-[#6B6B73]"
             >
-              {/* Dubai */}
-
               <div className="flex items-center gap-2">
                 <ShieldCheck
                   size={16}
                   className="text-[#4D11A8]"
                 />
-
                 <span>Dubai &amp; UAE Market Expertise</span>
               </div>
-
-              {/* Growth */}
 
               <div className="flex items-center gap-2">
                 <TrendingUp
                   size={16}
                   className="text-[#8F2CF4]"
                 />
-
                 <span>600% Organic Growth Proven</span>
               </div>
-
-              {/* AI */}
 
               <div className="flex items-center gap-2">
                 <Sparkles
                   size={16}
                   className="text-[#6620EE]"
                 />
-
                 <span>AI-Powered Automation</span>
               </div>
             </motion.div>
           </div>
 
-          {/* =====================================================
-              RIGHT SIDE CARD
-          ====================================================== */}
-
+          {/* RIGHT SIDE */}
           <div className="flex justify-center lg:col-span-5 lg:justify-end">
             <motion.div
               initial={
@@ -208,55 +179,14 @@ export default function Hero() {
                 delay: 0.3,
                 ease: EASE,
               }}
-              className="
-                relative
-                w-full
-                max-w-md
-                overflow-hidden
-                rounded-[30px]
-                border
-                border-[#D8BFF8]
-                bg-gradient-to-br
-                from-white/90
-                via-[#F5E9FF]/90
-                to-[#E2C7FF]/90
-                p-8
-                shadow-[0_25px_60px_rgba(126,34,206,0.18)]
-                backdrop-blur-md
-              "
+              className="relative w-full max-w-md overflow-hidden rounded-[30px] border border-[#D8BFF8] bg-gradient-to-br from-white/90 via-[#F5E9FF]/90 to-[#E2C7FF]/90 p-8 shadow-[0_25px_60px_rgba(126,34,206,0.18)] backdrop-blur-md"
             >
-              {/* PURPLE AMBIENT GLOW */}
+              {/* Card Glow */}
+              <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#A855F7]/20 blur-[90px]" />
 
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  -right-24
-                  -top-24
-                  h-72
-                  w-72
-                  rounded-full
-                  bg-[#A855F7]/20
-                  blur-[90px]
-                "
-              />
+              <div className="pointer-events-none absolute -bottom-32 -left-24 h-72 w-72 rounded-full bg-[#7C3AED]/15 blur-[90px]" />
 
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  -bottom-32
-                  -left-24
-                  h-72
-                  w-72
-                  rounded-full
-                  bg-[#7C3AED]/15
-                  blur-[90px]
-                "
-              />
-
-              {/* HEADER */}
-
+              {/* Card Header */}
               <div className="relative z-10 mb-8 flex items-center justify-between">
                 <span className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#4D11A8]">
                   Agency Identity
@@ -267,8 +197,7 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* LOGO */}
-
+              {/* Logo */}
               <div className="relative z-10 flex min-h-[210px] items-center justify-center">
                 <motion.div
                   initial={
@@ -292,36 +221,13 @@ export default function Hero() {
                   }}
                   className="relative w-full max-w-[460px]"
                 >
-                  {/* LOGO GLOW */}
-
-                  <div
-                    className="
-                      absolute
-                      left-1/2
-                      top-1/2
-                      -z-10
-                      h-32
-                      w-80
-                      -translate-x-1/2
-                      -translate-y-1/2
-                      rounded-full
-                      bg-[#9333EA]/20
-                      blur-[60px]
-                    "
-                  />
+                  <div className="absolute left-1/2 top-1/2 -z-10 h-32 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9333EA]/20 blur-[60px]" />
 
                   <motion.img
                     src="/brand/logo-horizontal.svg"
                     alt="ZironPro"
                     draggable={false}
-                    className="
-                      relative
-                      z-10
-                      h-auto
-                      w-full
-                      select-none
-                      object-contain
-                    "
+                    className="relative z-10 h-auto w-full select-none object-contain"
                     initial={
                       reduce
                         ? false
@@ -343,16 +249,13 @@ export default function Hero() {
                 </motion.div>
               </div>
 
-              {/* DIVIDER */}
-
+              {/* Divider */}
               <div className="relative z-10 my-5 border-t border-[#D8C5EC]" />
 
-              {/* STATS */}
-
+              {/* Stats */}
               <div className="relative z-10 grid grid-cols-2 gap-4">
-
+                
                 {/* SEO */}
-
                 <motion.div
                   initial={
                     reduce
@@ -371,19 +274,7 @@ export default function Hero() {
                     delay: 0.8,
                     ease: EASE,
                   }}
-                  className="
-                    rounded-2xl
-                    border
-                    border-[#E5DDF0]
-                    bg-white/80
-                    p-4
-                    shadow-[0_8px_20px_rgba(77,17,168,0.08)]
-                    backdrop-blur-sm
-                    transition-all
-                    duration-300
-                    hover:-translate-y-1
-                    hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]
-                  "
+                  className="rounded-2xl border border-[#E5DDF0] bg-white/80 p-4 shadow-[0_8px_20px_rgba(77,17,168,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]"
                 >
                   <p className="font-mono text-xs font-semibold text-[#6B6B73]">
                     SEO Growth
@@ -398,8 +289,7 @@ export default function Hero() {
                   </p>
                 </motion.div>
 
-                {/* PAID MEDIA */}
-
+                {/* Paid Media */}
                 <motion.div
                   initial={
                     reduce
@@ -418,19 +308,7 @@ export default function Hero() {
                     delay: 0.9,
                     ease: EASE,
                   }}
-                  className="
-                    rounded-2xl
-                    border
-                    border-[#E5DDF0]
-                    bg-white/80
-                    p-4
-                    shadow-[0_8px_20px_rgba(77,17,168,0.08)]
-                    backdrop-blur-sm
-                    transition-all
-                    duration-300
-                    hover:-translate-y-1
-                    hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]
-                  "
+                  className="rounded-2xl border border-[#E5DDF0] bg-white/80 p-4 shadow-[0_8px_20px_rgba(77,17,168,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]"
                 >
                   <p className="font-mono text-xs font-semibold text-[#6B6B73]">
                     Paid Media
