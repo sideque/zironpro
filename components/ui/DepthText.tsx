@@ -18,7 +18,7 @@ type Props = {
   pointerTracking?: boolean;
   autoOrbit?: boolean;
   orbitSpeed?: number; // radians / second
-  shadow?: string;
+  shadow?: string | boolean;
   className?: string;
 };
 
@@ -26,6 +26,8 @@ export default function DepthText({
   text, layers = 32, depth = 2.4, tilt = 8, faceColor = '#fff', depthColor = '#8F2CF4', fontSize = 'clamp(3rem, 12vw, 9rem)',
   pointerTracking = true, autoOrbit = true, orbitSpeed = 0.25, shadow = 'rgb(143 44 244 / 0.45)', className = '',
 }: Props) {
+  const shadowValue = typeof shadow === 'boolean' ? (shadow ? 'rgb(143 44 244 / 0.45)' : undefined) : shadow;
+
   const wrap = useRef<HTMLSpanElement>(null);
   const stage = useRef<HTMLSpanElement>(null);
 
@@ -88,7 +90,7 @@ export default function DepthText({
               style={{
                 transform: `translateZ(${z}px)`,
                 color: `color-mix(in srgb, ${depthColor}, #000 ${dark}%)`,
-                textShadow: i === 0 ? `0 30px 60px ${shadow}` : undefined,
+                textShadow: i === 0 && shadowValue ? `0 30px 60px ${shadowValue}` : undefined,
               }}
             >
               {text}

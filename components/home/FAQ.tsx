@@ -1,40 +1,92 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
-import { Plus } from "lucide-react";
+
 import { useState } from "react";
-import { EASE, FAQS } from "@/lib/constants";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
+import { FAQS, EASE } from "@/lib/constants";
 
 export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const toggle = (idx: number) => {
+    setOpenIndex((current) => (current === idx ? null : idx));
+  };
+
   return (
-    <section id="faq" className="relative bg-ink py-28 sm:py-36">
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24 lg:px-10">
-        <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="eyebrow mb-4">FAQ</p>
-          <h2 className="display text-[clamp(2.2rem,5vw,4.2rem)] text-white">Questions, answered.</h2>
+    <section
+      id="faq"
+      className="relative bg-white py-20 sm:py-24 lg:py-28"
+    >
+      <div className="mx-auto max-w-4xl px-5 sm:px-8 lg:px-10">
+        
+        {/* HEADER */}
+        <div className="mb-12 text-center sm:mb-16">
+          <Reveal>
+            <span className="eyebrow mb-2 inline-block text-[#4D11A8]">
+              Frequently Asked Questions
+            </span>
+            <h2 className="display-heading text-[#151515]">
+              Everything You Need To Know Before Partnering With ZironPro
+            </h2>
+          </Reveal>
         </div>
-        <div className="border-t border-white/[0.1]">
-          {FAQS.map((f, i) => {
-            const isOpen = open === i;
+
+        {/* ACCORDION */}
+        <div className="space-y-4">
+          {FAQS.map((faq, index) => {
+            const isOpen = openIndex === index;
+
             return (
-              <div key={f.question} className="border-b border-white/[0.1]">
-                <h3>
-                  <button type="button" id={`faq-btn-${i}`} aria-expanded={isOpen} aria-controls={`faq-panel-${i}`} onClick={() => setOpen(isOpen ? null : i)} className="flex w-full items-center justify-between gap-6 py-6 text-left sm:py-8">
-                    <span className={`text-lg font-medium leading-snug tracking-[-0.02em] transition-colors duration-300 sm:text-2xl ${isOpen ? "text-white" : "text-white/65"}`}>{f.question}</span>
-                    <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${isOpen ? "rotate-[135deg] border-purple-secondary bg-purple-secondary text-white" : "border-white/20 text-white/60"}`}><Plus size={18} aria-hidden="true" /></span>
+              <Reveal key={faq.question} delay={index * 0.05}>
+                <div
+                  className={`rounded-2xl border transition-all duration-300 ${
+                    isOpen
+                      ? "border-[#4D11A8]/50 bg-[#F7F5FC] shadow-sm"
+                      : "border-[#E7E2EF] bg-white hover:border-[#4D11A8]/30"
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggle(index)}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-4 p-6 text-left"
+                  >
+                    <span className="text-base font-bold tracking-tight text-[#151515] sm:text-lg">
+                      {faq.question}
+                    </span>
+                    <span
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 ${
+                        isOpen
+                          ? "rotate-180 bg-[#4D11A8] text-white"
+                          : "bg-[#F7F5FC] text-[#151515]"
+                      }`}
+                    >
+                      <ChevronDown size={18} />
+                    </span>
                   </button>
-                </h3>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-btn-${i}`} initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.5, ease: EASE }} className="overflow-hidden">
-                      <p className="max-w-2xl pb-8 text-[15px] leading-7 text-muted sm:pr-16">{f.answer}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: EASE }}
+                        className="overflow-hidden"
+                      >
+                        <div className="border-t border-[#E7E2EF] px-6 pb-6 pt-4 text-xs leading-relaxed text-[#6B6B73] sm:text-sm">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </Reveal>
             );
           })}
         </div>
+
       </div>
     </section>
   );

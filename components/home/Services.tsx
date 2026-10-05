@@ -1,67 +1,122 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-import CTAButton from "@/components/ui/CTAButton";
+
+import { motion } from "framer-motion";
+import {
+  ArrowUpRight,
+  Palette,
+  Globe,
+  TrendingUp,
+  Search,
+  Video,
+  Gift,
+  CheckCircle2,
+} from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
-import ScrollFloat from "@/components/ui/ScrollFloat";
-import { EASE, SERVICES } from "@/lib/constants";
+import { SERVICES, EASE } from "@/lib/constants";
+
+const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+  branding: Palette,
+  "web-dev": Globe,
+  "digital-marketing": TrendingUp,
+  seo: Search,
+  video: Video,
+  printing: Gift,
+};
 
 export default function Services() {
-  const [active, setActive] = useState(0);
-  const cur = SERVICES[active];
-
   return (
-    <section id="services" className="relative overflow-hidden bg-ink py-28 sm:py-36">
-      <div className="pointer-events-none absolute -right-40 top-0 h-[700px] w-[700px] rounded-full bg-purple-primary/25 blur-[170px]" />
-      <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <div className="mb-14 max-w-3xl sm:mb-20">
-          <p className="eyebrow mb-4">Capabilities</p>
-          <ScrollFloat containerClassName="!my-0" textClassName="display !text-[clamp(2.6rem,7.5vw,6.4rem)] !leading-[1.05] text-white">What We Do</ScrollFloat>
-          <Reveal><p className="mt-6 max-w-xl text-base leading-7 text-muted">We engineer integrated growth ecosystems that connect strategy, creativity, technology, media, and performance — giving your business everything it needs to move from attention to revenue.</p></Reveal>
+    <section
+      id="services"
+      className="relative bg-white py-20 sm:py-24 lg:py-28"
+    >
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        
+        {/* HEADER */}
+        <div className="mb-12 max-w-2xl sm:mb-16">
+          <Reveal>
+            <span className="eyebrow mb-2 block text-[#4D11A8]">
+              Comprehensive Growth Services
+            </span>
+            <h2 className="display-heading text-[#151515]">
+              Everything Your Brand Needs To Scale in the UAE
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="display-subheading mt-3 text-base text-[#6B6B73] sm:text-lg">
+              From identity design and high-performance websites to lead acquisition and AI automation — built specifically for growth-focused businesses.
+            </p>
+          </Reveal>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-          <div role="tablist" aria-label="Service categories" aria-orientation="vertical" className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none] lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
-            {SERVICES.map((s, i) => {
-              const on = i === active;
-              return (
-                <button key={s.title} role="tab" id={`svc-tab-${i}`} aria-selected={on} aria-controls="svc-panel" tabIndex={on ? 0 : -1} onClick={() => setActive(i)}
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowDown" || e.key === "ArrowRight") setActive((i + 1) % SERVICES.length);
-                    if (e.key === "ArrowUp" || e.key === "ArrowLeft") setActive((i - 1 + SERVICES.length) % SERVICES.length);
-                  }}
-                  className={`group relative shrink-0 rounded-full border px-5 py-3 text-left transition-all duration-500 lg:flex lg:items-baseline lg:gap-5 lg:rounded-none lg:border-0 lg:border-b lg:border-white/[0.08] lg:bg-transparent lg:px-0 lg:py-4 ${on ? "border-purple-secondary/60 bg-purple-secondary/15 text-white" : "border-white/10 text-white/40 hover:text-white/80"}`}>
-                  <span className={`hidden font-mono text-[11px] lg:inline ${on ? "text-purple-secondary" : "text-white/20"}`}>{s.number}</span>
-                  <span className={`whitespace-nowrap text-sm font-medium transition-transform duration-500 lg:whitespace-normal lg:text-[1.65rem] lg:leading-tight lg:tracking-[-0.035em] ${on ? "lg:translate-x-3" : ""}`}>{s.title}</span>
-                  {on && (<motion.span layoutId="svc-bar" aria-hidden="true" className="absolute bottom-[-1px] left-0 hidden h-px w-full bg-gradient-to-r from-purple-secondary to-transparent lg:block" transition={{ duration: 0.5, ease: EASE }} />)}
-                </button>
-              );
-            })}
-          </div>
+        {/* 3-COLUMN GRID */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((service, index) => {
+            const Icon = ICON_MAP[service.id] || TrendingUp;
 
-          <div role="tabpanel" id="svc-panel" aria-labelledby={`svc-tab-${active}`} className="relative lg:sticky lg:top-28 lg:self-start">
-            <div className="relative min-h-[420px] overflow-hidden rounded-[2rem] border border-white/[0.09] bg-white/[0.025] p-7 backdrop-blur-sm sm:p-10">
-              <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-purple-secondary/25 blur-[90px]" />
-              <AnimatePresence mode="wait">
-                <motion.div key={cur.title} initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }} transition={{ duration: 0.45, ease: EASE }} className="relative">
-                  <div className="flex items-baseline justify-between">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-purple-secondary">{cur.number} / {String(SERVICES.length).padStart(2, "0")}</span>
-                    <span className="font-mono text-[11px] text-white/30">{cur.items.length} services</span>
+            return (
+              <motion.article
+                key={service.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.08,
+                  ease: EASE,
+                }}
+                className="group relative flex flex-col justify-between rounded-3xl border border-[#E7E2EF] bg-[#F7F5FC] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[#4D11A8]/50 hover:bg-white hover:shadow-lg"
+              >
+                <div>
+                  {/* TOP CARD HEADER */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white border border-[#E7E2EF] text-[#4D11A8] shadow-sm transition-colors duration-300 group-hover:bg-[#4D11A8] group-hover:text-white">
+                      <Icon size={20} />
+                    </div>
+                    <span className="font-mono text-xs font-semibold text-[#6B6B73]">
+                      {service.number}
+                    </span>
                   </div>
-                  <h3 className="display mt-6 text-[clamp(1.9rem,3.8vw,3rem)] text-white">{cur.title}</h3>
-                  <p className="mt-4 max-w-lg text-[15px] leading-7 text-muted">{cur.description}</p>
-                  <ul className="mt-9 flex flex-wrap gap-2">
-                    {cur.items.map((item, i) => (
-                      <motion.li key={item} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 + i * 0.03, ease: EASE }} className="rounded-full border border-white/12 bg-white/[0.03] px-4 py-2 text-[13px] text-white/75 transition-colors duration-300 hover:border-purple-secondary/60 hover:bg-purple-secondary/15 hover:text-white">{item}</motion.li>
+
+                  {/* TITLE & DESCRIPTION */}
+                  <h3 className="mt-6 text-xl font-bold tracking-tight text-[#151515] transition-colors duration-300 group-hover:text-[#4D11A8]">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2.5 text-xs leading-relaxed text-[#6B6B73]">
+                    {service.description}
+                  </p>
+
+                  {/* ITEMS LIST */}
+                  <ul className="mt-5 space-y-2 border-t border-[#E7E2EF] pt-4">
+                    {service.items.map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-center gap-2 text-xs font-medium text-[#151515]"
+                      >
+                        <CheckCircle2 size={13} className="shrink-0 text-[#8F2CF4]" />
+                        <span>{item}</span>
+                      </li>
                     ))}
                   </ul>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <div className="mt-6"><CTAButton href="/#contact">Book a Free Consultation</CTAButton></div>
-          </div>
+                </div>
+
+                {/* BOTTOM LINK */}
+                <div className="mt-6 flex items-center justify-between pt-2">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#4D11A8] transition-colors group-hover:text-[#8F2CF4]"
+                  >
+                    <span>Request Service Proposal</span>
+                    <ArrowUpRight
+                      size={14}
+                      className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    />
+                  </a>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );

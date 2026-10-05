@@ -1,64 +1,99 @@
 "use client";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
-import CTAButton from "@/components/ui/CTAButton";
+
+import { motion } from "framer-motion";
+import { ArrowUpRight, Building2, Stethoscope, Car, Truck, GraduationCap, Laptop, ShoppingBag, Hotel, Briefcase, Gem, Rocket } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
-import ScrollFloat from "@/components/ui/ScrollFloat";
-import { EASE, INDUSTRIES } from "@/lib/constants";
-import IndustryVisual from "./IndustryVisual";
+import { INDUSTRIES, EASE } from "@/lib/constants";
+
+const ICON_LIST = [
+  Building2,
+  Stethoscope,
+  Car,
+  Truck,
+  GraduationCap,
+  Laptop,
+  ShoppingBag,
+  Hotel,
+  Briefcase,
+  Gem,
+  Rocket,
+];
 
 export default function Industries() {
-  const [active, setActive] = useState(0);
-  const cur = INDUSTRIES[active];
-
   return (
-    <section id="industries" className="relative bg-dark py-28 sm:py-36">
-      <div className="pointer-events-none absolute right-[-20%] top-[10%] h-[600px] w-[600px] rounded-full bg-purple-primary/20 blur-[150px]" />
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-10">
-        <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="eyebrow mb-4">Industries</p>
-          <ScrollFloat containerClassName="!my-0" textClassName="display !text-[clamp(2.5rem,6.2vw,5rem)] !leading-[1.08] text-white">Industries We Grow</ScrollFloat>
+    <section
+      id="industries"
+      className="relative bg-white py-20 sm:py-24 lg:py-28"
+    >
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        
+        {/* HEADER */}
+        <div className="mb-12 max-w-2xl sm:mb-16">
           <Reveal>
-            <p className="mt-6 max-w-md text-base leading-7 text-muted">As a digital marketing agency in the UAE, we don&apos;t run generic campaigns. Every industry has its own buyer behaviour, sales cycle, and channels that actually convert. Our strategies are built around how your customers really make decisions.</p>
+            <span className="eyebrow mb-2 block text-[#4D11A8]">
+              Industry Specialization
+            </span>
+            <h2 className="display-heading text-[#151515]">
+              Tailored Strategies For UAE Sector Leadership
+            </h2>
           </Reveal>
-
-          <div role="tablist" aria-label="Industries" aria-orientation="vertical" className="-mx-5 mt-10 flex gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none] lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0 lg:pb-0">
-            {INDUSTRIES.map((ind, i) => {
-              const on = i === active;
-              return (
-                <button key={ind.title} role="tab" id={`ind-tab-${i}`} aria-selected={on} aria-controls="ind-panel" tabIndex={on ? 0 : -1}
-                  onClick={() => setActive(i)}
-                  onMouseEnter={() => window.matchMedia("(hover: hover)").matches && setActive(i)}
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowDown" || e.key === "ArrowRight") setActive((i + 1) % INDUSTRIES.length);
-                    if (e.key === "ArrowUp" || e.key === "ArrowLeft") setActive((i - 1 + INDUSTRIES.length) % INDUSTRIES.length);
-                  }}
-                  className={`group relative shrink-0 rounded-full border px-5 py-3 text-left transition-all duration-500 lg:flex lg:items-center lg:gap-5 lg:rounded-none lg:border-0 lg:border-b lg:border-white/[0.08] lg:bg-transparent lg:px-0 lg:py-5 ${on ? "border-purple-secondary/60 bg-purple-secondary/15 text-white" : "border-white/10 text-white/45 hover:text-white"}`}>
-                  <span className={`hidden font-mono text-[11px] lg:inline ${on ? "text-purple-secondary" : "text-white/25"}`}>{ind.number}</span>
-                  <span className={`whitespace-nowrap text-sm font-medium tracking-tight transition-transform duration-500 lg:text-2xl lg:tracking-[-0.03em] ${on ? "lg:translate-x-3" : ""}`}>{ind.title}</span>
-                  <span aria-hidden="true" className={`ml-auto hidden h-px bg-purple-secondary transition-all duration-500 lg:block ${on ? "w-14" : "w-0"}`} />
-                </button>
-              );
-            })}
-          </div>
-          <div className="mt-10"><CTAButton href="/#contact" variant="ghost" magnetic={false}>Find Your Industry Strategy →</CTAButton></div>
+          <Reveal delay={0.1}>
+            <p className="display-subheading mt-3 text-base text-[#6B6B73] sm:text-lg">
+              We understand the buying behavior, regulatory context, and growth drivers across major GCC business sectors.
+            </p>
+          </Reveal>
         </div>
 
-        <div role="tabpanel" id="ind-panel" aria-labelledby={`ind-tab-${active}`} className="relative min-h-[520px] overflow-hidden rounded-[2rem] border border-white/[0.09] bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-6 sm:p-10">
-          <AnimatePresence mode="wait">
-            <motion.div key={cur.title} initial={{ opacity: 0, y: 24, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -16, filter: "blur(6px)" }} transition={{ duration: 0.55, ease: EASE }} className="flex h-full flex-col">
-              <div className="flex items-start justify-between">
-                <span className="text-outline text-[clamp(4rem,10vw,8rem)] font-bold leading-[0.85] tracking-[-0.06em]">{cur.number}</span>
-                <div className="flex flex-wrap justify-end gap-2">
-                  {cur.tags.map((t) => (<span key={t} className="rounded-full border border-white/12 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">{t}</span>))}
+        {/* MODERN INTERACTIVE GRID */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {INDUSTRIES.map((ind, index) => {
+            const IconComponent = ICON_LIST[index % ICON_LIST.length];
+
+            return (
+              <motion.article
+                key={ind.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.04,
+                  ease: EASE,
+                }}
+                className="group relative flex flex-col justify-between rounded-2xl border border-[#E7E2EF] bg-[#F7F5FC] p-6 transition-all duration-300 hover:border-[#4D11A8]/40 hover:bg-white hover:shadow-md"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-semibold text-[#8F2CF4]">
+                      {ind.number}
+                    </span>
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white border border-[#E7E2EF] text-[#4D11A8] transition-colors group-hover:bg-[#4D11A8] group-hover:text-white">
+                      <IconComponent size={18} />
+                    </div>
+                  </div>
+
+                  <h3 className="mt-4 text-base font-bold text-[#151515] transition-colors group-hover:text-[#4D11A8]">
+                    {ind.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[#6B6B73]">
+                    {ind.description}
+                  </p>
                 </div>
-              </div>
-              <div className="relative my-4 aspect-[4/2.6] w-full"><IndustryVisual index={active} /></div>
-              <h3 className="display text-[clamp(2rem,4.4vw,3.4rem)] text-white">{cur.title}</h3>
-              <p className="mt-4 max-w-xl text-[15px] leading-7 text-muted">{cur.description}</p>
-            </motion.div>
-          </AnimatePresence>
+
+                <div className="mt-5 flex items-center justify-between border-t border-[#E7E2EF] pt-3">
+                  <span className="font-mono text-[10px] uppercase font-semibold text-[#6B6B73]">
+                    UAE Market Focus
+                  </span>
+                  <ArrowUpRight
+                    size={15}
+                    className="text-[#8F2CF4] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );

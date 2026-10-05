@@ -1,73 +1,24 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import { useRef } from "react";
-
+  ArrowUpRight,
+  Sparkles,
+  TrendingUp,
+  ShieldCheck,
+} from "lucide-react";
+import Link from "next/link";
 import BlurText from "@/components/ui/Blurtext";
-import CTAButton from "@/components/ui/CTAButton";
-import DepthText from "@/components/ui/DepthText";
-import Ribbon from "@/components/ui/Ribbon";
-import TextType from "@/components/ui/Texttype";
 import { EASE } from "@/lib/constants";
-import { useMedia } from "@/lib/hooks";
-
-const TAGLINES = [
-  "Strategy that converts.",
-  "Marketing that performs.",
-  "Growth that compounds.",
-];
 
 export default function Hero() {
-  const ref = useRef<HTMLElement>(null);
-
   const reduce = useReducedMotion();
-  const small = useMedia("(max-width: 767px)");
-  const finePointer = useMedia("(hover: hover) and (pointer: fine)");
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const ribbonY = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, -35]);
-  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-
-  const sx = useSpring(mx, {
-    stiffness: 60,
-    damping: 20,
-  });
-
-  const sy = useSpring(my, {
-    stiffness: 60,
-    damping: 20,
-  });
-
-  const onMove = (e: React.PointerEvent) => {
-    if (!finePointer || reduce || !ref.current) return;
-
-    const r = ref.current.getBoundingClientRect();
-
-    mx.set(e.clientX - r.left - 300);
-    my.set(e.clientY - r.top - 300);
-  };
-
-  const enter = (delay: number) => ({
-    initial: reduce ? false : { opacity: 0, y: 20 },
+  const enterAnimation = (delay: number) => ({
+    initial: reduce ? false : { opacity: 0, y: 16 },
     animate: { opacity: 1, y: 0 },
     transition: {
-      duration: 0.8,
+      duration: 0.6,
       delay,
       ease: EASE,
     },
@@ -75,356 +26,398 @@ export default function Hero() {
 
   return (
     <section
-      ref={ref}
-      onPointerMove={onMove}
-      className="grain relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink"
+      className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-white pb-16 pt-28 md:pt-32"
       aria-label="Introduction"
     >
-      {/* BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
+      {/* =========================================================
+          BACKGROUND ACCENTS
+      ========================================================== */}
+
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        {/* Top-right purple ambient glow */}
+        <div
+          className="absolute -right-20 -top-20 h-[450px] w-[450px] rounded-full bg-[#F1EAFE]/80 blur-[90px]"
+          aria-hidden="true"
+        />
+
+        {/* Bottom-left ambient glow */}
+        <div
+          className="absolute -bottom-20 -left-20 h-[400px] w-[400px] rounded-full bg-[#F7F5FC] blur-[80px]"
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
+          {/* =====================================================
+              LEFT CONTENT
+          ====================================================== */}
+
+          <div className="lg:col-span-7">
+            {/* EYEBROW */}
+
+            <motion.div
+              {...enterAnimation(0.1)}
+              className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#E7E2EF] bg-[#F7F5FC] px-3.5 py-1.5"
+            >
+              <span className="h-2 w-2 rounded-full bg-[#8F2CF4] shadow-[0_0_8px_#8F2CF4]" />
+
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[#4D11A8]">
+                Digital Marketing &amp; Growth Agency · UAE
+              </span>
+            </motion.div>
+
+            {/* MAIN HEADING */}
+
+            <h1 className="display-hero max-w-2xl font-bold tracking-tight text-[#151515]">
+              We Turn Your Brand Into A{" "}
+              <span className="text-purple-gradient relative inline-block">
+                Revenue Machine
+              </span>
+            </h1>
+
+            {/* SUBTITLE */}
+
+            <div className="mt-5 max-w-xl">
+              <BlurText
+                text="ZironPro is an AI-powered marketing agency in Dubai helping businesses across the UAE attract high-intent audiences, convert qualified leads, and scale sustainable revenue."
+                delay={25}
+                direction="bottom"
+                animateBy="words"
+                className="text-base font-normal leading-relaxed text-[#6B6B73] sm:text-lg"
+              />
+            </div>
+
+            {/* CTAS */}
+
+            <motion.div
+              {...enterAnimation(0.4)}
+              className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
+            >
+              {/* PRIMARY CTA */}
+
+              <Link
+                href="/#contact"
+                className="group inline-flex items-center gap-3 rounded-full bg-[#4D11A8] px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#8F2CF4] hover:shadow-xl"
+              >
+                <span>Book a Consultation</span>
+
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 transition-transform duration-300 group-hover:rotate-45">
+                  <ArrowUpRight size={14} />
+                </span>
+              </Link>
+
+              {/* SECONDARY CTA */}
+
+              <Link
+                href="/#case-studies"
+                className="group inline-flex items-center gap-2 rounded-full border border-[#E7E2EF] bg-[#F7F5FC] px-6 py-3.5 text-sm font-semibold text-[#151515] transition-all duration-300 hover:border-[#4D11A8]/40 hover:bg-white"
+              >
+                <span>Explore Our Work</span>
+
+                <ArrowUpRight
+                  size={15}
+                  className="text-[#8F2CF4] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </Link>
+            </motion.div>
+
+            {/* QUICK TRUST HIGHLIGHTS */}
+
+            <motion.div
+              {...enterAnimation(0.55)}
+              className="mt-10 flex flex-wrap items-center gap-6 border-t border-[#E7E2EF] pt-6 text-xs font-medium text-[#6B6B73]"
+            >
+              {/* Dubai */}
+
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-[#4D11A8]" />
+
+                <span>Dubai &amp; UAE Market Expertise</span>
+              </div>
+
+              {/* Growth */}
+
+              <div className="flex items-center gap-2">
+                <TrendingUp size={16} className="text-[#8F2CF4]" />
+
+                <span>600% Organic Growth Proven</span>
+              </div>
+
+              {/* AI */}
+
+              <div className="flex items-center gap-2">
+                <Sparkles size={16} className="text-[#6620EE]" />
+
+                <span>AI-Powered Automation</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* =====================================================
+              RIGHT SIDE CARD
+          ====================================================== */}
+
+          {/* RIGHT: ZIRONPRO BRAND CARD */}
+          {/* RIGHT: ZIRONPRO BRAND CARD */}
+<div className="flex justify-center lg:col-span-5 lg:justify-end">
+  <motion.div
+    initial={
+      reduce
+        ? false
+        : {
+            opacity: 0,
+            scale: 0.94,
+            y: 20,
+          }
+    }
+    animate={{
+      opacity: 1,
+      scale: 1,
+      y: 0,
+    }}
+    transition={{
+      duration: 0.8,
+      delay: 0.3,
+      ease: EASE,
+    }}
+    className="
+      relative
+      w-full
+      max-w-md
+      overflow-hidden
+      rounded-[30px]
+      border
+      border-[#D8BFF8]
+      bg-gradient-to-br
+      from-[#FFFFFF]
+      via-[#F5E9FF]
+      to-[#E2C7FF]
+      p-8
+      shadow-[0_25px_60px_rgba(126,34,206,0.18)]
+    "
+  >
+    {/* PURPLE AMBIENT GLOW */}
+
+    <div
+      className="
+        pointer-events-none
+        absolute
+        -right-24
+        -top-24
+        h-72
+        w-72
+        rounded-full
+        bg-[#A855F7]/20
+        blur-[90px]
+      "
+    />
+
+    <div
+      className="
+        pointer-events-none
+        absolute
+        -bottom-32
+        -left-24
+        h-72
+        w-72
+        rounded-full
+        bg-[#7C3AED]/15
+        blur-[90px]
+      "
+    />
+
+    {/* HEADER */}
+
+    <div className="relative z-10 mb-8 flex items-center justify-between">
+      <span className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#4D11A8]">
+        Agency Identity
+      </span>
+
+      <span className="rounded-full bg-[#7C3AED]/10 px-3 py-1.5 font-mono text-[10px] font-semibold text-[#4D11A8]">
+        Dubai · UAE
+      </span>
+    </div>
+
+    {/* LOGO */}
+
+    <div className="relative z-10 flex min-h-[210px] items-center justify-center">
+      <motion.div
+        initial={
+          reduce
+            ? false
+            : {
+                opacity: 0,
+                scale: 0.8,
+                y: 20,
+              }
+        }
+        animate={{
+          opacity: 1,
+          scale: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.9,
+          delay: 0.45,
+          ease: EASE,
+        }}
+        className="relative w-full max-w-[460px]"
+      >
+        {/* LOGO GLOW */}
+
         <div
           className="
             absolute
             left-1/2
-            top-[-45vw]
-            h-[75vw]
-            w-[125vw]
+            top-1/2
+            -z-10
+            h-32
+            w-80
             -translate-x-1/2
-            rounded-[50%]
-            md:top-[-40vw]
-          "
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 100%, rgb(143 44 244 / 0.48), rgb(102 32 238 / 0.18) 38%, transparent 68%)",
-            boxShadow:
-              "inset 0 -2px 70px -20px rgb(176 120 255 / 0.55)",
-            borderBottom: "1px solid rgb(190 140 255 / 0.35)",
-          }}
-        />
-
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-dark via-transparent to-transparent" />
-
-        <div className="bg-grid absolute inset-0 opacity-40" />
-
-        <motion.div
-          style={{ x: sx, y: sy }}
-          className="
-            absolute
-            left-0
-            top-0
-            hidden
-            h-[500px]
-            w-[500px]
+            -translate-y-1/2
             rounded-full
-            bg-[radial-gradient(circle,rgb(143_44_244/0.16),transparent_62%)]
-            md:block
+            bg-[#9333EA]/20
+            blur-[60px]
           "
         />
-      </div>
 
-      {/* RIBBON */}
-      <motion.div
-        style={{
-          y: reduce ? 0 : ribbonY,
-        }}
-        className="
-          pointer-events-none
-          absolute
-          -right-[28%]
-          top-[11%]
-          -z-[5]
-          w-[82vw]
-          max-w-[650px]
-          opacity-45
-
-          sm:-right-[15%]
-          sm:w-[65vw]
-          sm:opacity-65
-
-          lg:right-[-3%]
-          lg:top-[5%]
-          lg:w-[48vw]
-          lg:max-w-[700px]
-          lg:opacity-90
-        "
-      >
-        <motion.div
+        <motion.img
+          src="/brand/logo-horizontal.svg"
+          alt="ZironPro"
+          draggable={false}
+          className="
+            relative
+            z-10
+            h-auto
+            w-full
+            select-none
+            object-contain
+          "
           initial={
             reduce
               ? false
               : {
                   opacity: 0,
-                  scale: 0.9,
-                  rotate: -6,
+                  filter: "blur(8px)",
                 }
           }
           animate={{
             opacity: 1,
-            scale: 1,
-            rotate: 0,
+            filter: "blur(0px)",
           }}
           transition={{
-            duration: 1.5,
-            delay: 0.2,
+            duration: 0.8,
+            delay: 0.6,
             ease: EASE,
           }}
-        >
-          <Ribbon
-            strands={small ? 9 : 16}
-            className="h-auto w-full"
-          />
-        </motion.div>
+        />
       </motion.div>
+    </div>
 
-      {/* MAIN CONTENT */}
+    {/* DIVIDER */}
+
+    <div className="relative z-10 my-5 border-t border-[#D8C5EC]" />
+
+    {/* STATS */}
+
+    <div className="relative z-10 grid grid-cols-2 gap-4">
+      {/* SEO */}
+
       <motion.div
-        style={{
-          y: reduce ? 0 : copyY,
-          opacity: reduce ? 1 : fade,
+        initial={
+          reduce
+            ? false
+            : {
+                opacity: 0,
+                y: 15,
+              }
+        }
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.6,
+          delay: 0.8,
+          ease: EASE,
         }}
         className="
-          relative
-          mx-auto
-          flex
-          w-full
-          max-w-7xl
-          flex-1
-          flex-col
-          justify-center
-
-          px-5
-          pb-20
-          pt-24
-
-          sm:px-8
-          sm:pb-20
-          sm:pt-28
-
-          lg:px-10
-          lg:pb-16
-          lg:pt-24
+          rounded-2xl
+          border
+          border-[#E5DDF0]
+          bg-white
+          p-4
+          shadow-[0_8px_20px_rgba(77,17,168,0.08)]
+          transition-all
+          duration-300
+          hover:-translate-y-1
+          hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]
         "
       >
-        {/* EYEBROW */}
-        <motion.p
-          {...enter(0.15)}
-          className="
-            eyebrow
-            mb-4
-            flex
-            items-center
-            gap-2
-            text-[10px]
+        <p className="font-mono text-xs font-semibold text-[#6B6B73]">
+          SEO Growth
+        </p>
 
-            sm:mb-5
-            sm:text-xs
-          "
-        >
-          <span className="h-px w-6 bg-purple-secondary sm:w-8" />
+        <p className="mt-1 text-3xl font-bold tracking-tight text-[#4D11A8]">
+          +600%
+        </p>
 
-          Digital Marketing Agency · Dubai · UAE
-        </motion.p>
-
-        {/* HEADING */}
-        <h1 className="relative z-10 max-w-4xl">
-          {/* ZIRONPRO */}
-          <motion.span
-            initial={
-              reduce
-                ? false
-                : {
-                    opacity: 0,
-                    scale: 0.96,
-                    filter: "blur(10px)",
-                  }
-            }
-            animate={{
-              opacity: 1,
-              scale: 1,
-              filter: "blur(0px)",
-            }}
-            transition={{
-              duration: 1.1,
-              delay: 0.25,
-              ease: EASE,
-            }}
-            className="block origin-left"
-          >
-            <DepthText
-              text="ZironPro"
-              layers={small ? 10 : 24}
-              depth={small ? 1.2 : 1.8}
-              tilt={small ? 4 : 6}
-              faceColor="#f6f2ff"
-              depthColor="#8F2CF4"
-              fontSize="clamp(3rem, 10vw, 8rem)"
-              pointerTracking={!small}
-              orbitSpeed={0.18}
-              shadow
-            />
-          </motion.span>
-
-          {/* MAIN TITLE */}
-          <motion.span
-            {...enter(0.55)}
-            className="
-              mt-3
-              block
-              max-w-3xl
-              text-[clamp(1.35rem,3.4vw,2.8rem)]
-              font-semibold
-              leading-[1.05]
-              tracking-[-0.04em]
-              text-white
-
-              sm:mt-4
-            "
-          >
-            The Best Marketing Agency in Dubai
-
-            <span className="mt-1 block text-white/40">
-              &amp; Trusted Marketing Agency UAE-Wide
-            </span>
-          </motion.span>
-        </h1>
-
-        {/* DESCRIPTION */}
-        <div className="mt-5 max-w-lg sm:mt-6">
-          <BlurText
-            text="We turn your brand into a revenue machine — helping businesses across Dubai, Abu Dhabi, and the wider UAE attract the right audience, convert leads into customers, and build lasting brand authority."
-            delay={35}
-            direction="bottom"
-            animateBy="words"
-            easing={EASE as unknown as [number, number, number, number]}
-            className="
-              text-[13px]
-              leading-6
-              text-muted
-
-              sm:text-[15px]
-              sm:leading-7
-            "
-          />
-        </div>
-
-        {/* TAGLINE */}
-        <motion.div
-          {...enter(1.1)}
-          className="
-            mt-4
-            flex
-            min-h-6
-            items-center
-            gap-2
-            font-mono
-            text-xs
-            text-purple-secondary
-
-            sm:mt-5
-            sm:text-sm
-          "
-        >
-          <span
-            aria-hidden="true"
-            className="
-              h-1.5
-              w-1.5
-              rounded-full
-              bg-purple-secondary
-              shadow-[0_0_12px_var(--purple-secondary)]
-            "
-          />
-
-          {reduce ? (
-            <span>{TAGLINES[0]}</span>
-          ) : (
-            <TextType
-              text={TAGLINES}
-              typingSpeed={50}
-              deletingSpeed={25}
-              pauseDuration={2000}
-              initialDelay={1200}
-              cursorCharacter="_"
-              className="text-white/80"
-              cursorClassName="text-purple-secondary"
-            />
-          )}
-        </motion.div>
-
-        {/* BUTTONS */}
-        <motion.div
-          {...enter(1.3)}
-          className="
-            mt-6
-            flex
-            flex-col
-            items-start
-            gap-3
-
-            sm:mt-7
-            sm:flex-row
-            sm:items-center
-          "
-        >
-          <CTAButton href="/#contact">
-            Book Consultation
-          </CTAButton>
-
-          <CTAButton
-            href="/#case-studies"
-            variant="ghost"
-            magnetic={false}
-          >
-            Explore Our Work
-          </CTAButton>
-        </motion.div>
+        <p className="mt-1 text-[11px] text-[#6B6B73]">
+          Organic Traffic
+        </p>
       </motion.div>
 
-      {/* BOTTOM INFO */}
+      {/* PAID MEDIA */}
+
       <motion.div
-        {...enter(1.8)}
+        initial={
+          reduce
+            ? false
+            : {
+                opacity: 0,
+                y: 15,
+              }
+        }
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 0.6,
+          delay: 0.9,
+          ease: EASE,
+        }}
         className="
-          absolute
-          inset-x-0
-          bottom-5
-          mx-auto
-          hidden
-          w-full
-          max-w-7xl
-          items-center
-          justify-between
-          px-10
-          font-mono
-          text-[9px]
-          uppercase
-          tracking-[0.2em]
-          text-white/30
-
-          md:flex
+          rounded-2xl
+          border
+          border-[#E5DDF0]
+          bg-white
+          p-4
+          shadow-[0_8px_20px_rgba(77,17,168,0.08)]
+          transition-all
+          duration-300
+          hover:-translate-y-1
+          hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]
         "
       >
-        <span>Dubai · Abu Dhabi · UAE-wide</span>
+        <p className="font-mono text-xs font-semibold text-[#6B6B73]">
+          Paid Media
+        </p>
 
-        <a
-          href="#trust"
-          className="
-            group
-            flex
-            items-center
-            gap-2
-            transition-colors
-            hover:text-white
-          "
-        >
-          Scroll
+        <p className="mt-1 text-3xl font-bold tracking-tight text-[#8F2CF4]">
+          5X
+        </p>
 
-          <ArrowDown
-            size={12}
-            className="transition-transform group-hover:translate-y-1"
-            aria-hidden="true"
-          />
-        </a>
+        <p className="mt-1 text-[11px] text-[#6B6B73]">
+          Lead Volume
+        </p>
       </motion.div>
+    </div>
+  </motion.div>
+</div>
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,26 +1,83 @@
-"use client";
-import CTAButton from "@/components/ui/CTAButton";
+import { ArrowUpRight, Mail, MapPin, MessageSquare } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
-import Ribbon from "@/components/ui/Ribbon";
+import { CONTACT } from "@/lib/constants";
 
 export default function FinalCTA() {
   return (
-    <section id="contact" className="relative isolate overflow-hidden bg-navy py-32 sm:py-44">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 h-[120vw] w-[120vw] max-h-[1400px] max-w-[1400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgb(143_44_244/0.5),rgb(77_17_168/0.25)_40%,transparent_70%)]" />
-        <div className="absolute -right-[25%] top-0 w-[90vw] max-w-[700px] opacity-40 sm:-right-[5%] sm:opacity-60"><Ribbon strands={12} className="h-auto w-full" flip /></div>
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-dark to-transparent" />
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-ink/70 to-transparent" />
-      </div>
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-        <Reveal>
-          <p className="eyebrow mb-6">Let&apos;s talk</p>
-          <h2 className="display max-w-5xl text-[clamp(2.6rem,8vw,7.2rem)] !leading-[0.98] text-white">Ready to Work With the <span className="text-gradient">Best Marketing Agency</span> in Dubai?</h2>
-        </Reveal>
-        <Reveal delay={0.15}>
-          <p className="mt-8 max-w-2xl text-base leading-7 text-white/70 sm:text-lg sm:leading-8">If you&apos;re looking for a marketing agency in the UAE offering SEO, paid ads, content, and social media — backed by real results, not guesswork — we&apos;re here to help you scale.</p>
-          <div className="mt-10"><CTAButton href="mailto:info@zironpro.com" variant="light">Let&apos;s Build Your Growth Engine</CTAButton></div>
-        </Reveal>
+    <section
+      id="contact"
+      className="relative overflow-hidden bg-white py-20 sm:py-24"
+    >
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="relative overflow-hidden rounded-3xl border border-[#E7E2EF] bg-gradient-to-br from-[#4D11A8] via-[#170349] to-[#0D1420] px-6 py-16 text-white shadow-2xl sm:px-12 sm:py-20 lg:px-16">
+          
+          {/* AMBIENT BACKGROUND GLOW */}
+          <div
+            className="pointer-events-none absolute -right-20 -top-20 h-96 w-96 rounded-full bg-[#8F2CF4]/30 blur-[100px]"
+            aria-hidden="true"
+          />
+
+          <div className="relative mx-auto max-w-3xl text-center">
+            <Reveal>
+              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 backdrop-blur-md">
+                <span className="h-2 w-2 rounded-full bg-[#8F2CF4]" />
+                <span className="font-mono text-xs font-semibold uppercase tracking-widest text-white">
+                  Start Your UAE Growth Journey
+                </span>
+              </span>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+                Ready to Turn Your Brand Into a Revenue Machine?
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <p className="mt-4 text-sm leading-relaxed text-white/80 sm:text-base">
+                Book a consultation with our Dubai growth strategists. We will evaluate your digital presence, identify revenue bottlenecks, and present a clear growth blueprint.
+              </p>
+            </Reveal>
+
+            {/* BUTTONS */}
+            <Reveal delay={0.3} className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a
+                href={`mailto:${CONTACT.email}?subject=Consultation%20Request`}
+                className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-sm font-bold text-[#4D11A8] shadow-lg transition-all duration-300 hover:bg-[#F1EAFE] sm:w-auto"
+              >
+                <span>Book a Consultation</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#4D11A8] text-white transition-transform duration-300 group-hover:rotate-45">
+                  <ArrowUpRight size={14} />
+                </span>
+              </a>
+
+              <a
+                href={CONTACT.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 px-7 py-4 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:w-auto"
+              >
+                <MessageSquare size={16} />
+                <span>WhatsApp Us Direct</span>
+              </a>
+            </Reveal>
+
+            {/* CONTACT DETAILS FOOTER INSIDE CTA */}
+            <Reveal delay={0.4} className="mt-12 flex flex-wrap items-center justify-center gap-6 border-t border-white/15 pt-8 text-xs text-white/70">
+              <div className="flex items-center gap-2">
+                <Mail size={15} className="text-[#8F2CF4]" />
+                <a href={`mailto:${CONTACT.email}`} className="hover:text-white">
+                  {CONTACT.email}
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin size={15} className="text-[#8F2CF4]" />
+                <span>{CONTACT.location}</span>
+              </div>
+            </Reveal>
+
+          </div>
+        </div>
       </div>
     </section>
   );

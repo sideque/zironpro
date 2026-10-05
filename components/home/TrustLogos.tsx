@@ -1,33 +1,51 @@
-"use client";
 import LogoLoop, { type LogoItem } from "@/components/ui/LogoLoop";
-import Reveal from "@/components/ui/Reveal";
+import { CLIENT_LOGOS } from "@/lib/constants";
 
-/**
- * PLACEHOLDER marks — real client logo files weren't supplied.
- * Replace each `node` with `{ src: "/clients/xyz.svg", alt: "Xyz" }`.
- * "Maxline" is the only client named in the source (case study), shown as a text wordmark.
- */
-const Mark = ({ label, real = false }: { label: string; real?: boolean }) => (
-  <span className="flex items-center gap-3 whitespace-nowrap font-mono text-[13px] uppercase tracking-[0.2em] text-white/35 transition-colors duration-300 hover:text-white/85">
-    <span aria-hidden="true" className={`h-5 w-5 rounded-md border ${real ? "border-purple-secondary/70 bg-purple-secondary/20" : "border-white/20"}`} />
-    {label}
-  </span>
+const ClientMark = ({ name, industry }: { name: string; industry: string }) => (
+  <div className="flex items-center gap-3 rounded-xl border border-[#E7E2EF] bg-[#F7F5FC] px-4 py-2.5 transition-all duration-300 hover:border-[#4D11A8]/40 hover:bg-white hover:shadow-sm">
+    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#4D11A8]/10 text-xs font-bold text-[#4D11A8]">
+      {name.charAt(0)}
+    </span>
+    <div className="flex flex-col">
+      <span className="whitespace-nowrap font-sans text-xs font-bold tracking-tight text-[#151515]">
+        {name}
+      </span>
+      <span className="whitespace-nowrap font-mono text-[10px] text-[#6B6B73]">
+        {industry}
+      </span>
+    </div>
+  </div>
 );
 
-const logos: LogoItem[] = [
-  { node: <Mark label="Maxline" real />, ariaLabel: "Maxline" },
-  ...Array.from({ length: 7 }, (_, i) => ({ node: <Mark label={`Client logo ${String(i + 2).padStart(2, "0")}`} />, ariaLabel: `Client logo placeholder ${i + 2}` })),
-];
+const logoItems: LogoItem[] = CLIENT_LOGOS.map((client) => ({
+  node: <ClientMark name={client.name} industry={client.industry} />,
+  ariaLabel: client.name,
+}));
 
 export default function TrustLogos() {
   return (
-    <section id="trust" aria-label="Clients" className="relative border-y border-white/[0.07] bg-dark py-12 sm:py-16">
-      <Reveal className="mx-auto mb-8 flex max-w-7xl items-center gap-5 px-5 sm:px-8 lg:px-10">
-        <span className="eyebrow shrink-0">Trusted by brands across the UAE</span>
-        <span className="hairline flex-1" />
-      </Reveal>
-      <LogoLoop logos={logos} speed={55} gap={72} logoHeight={28} pauseOnHover fadeOut fadeOutColor="#0D1420" ariaLabel="Client logos" />
-      <p className="mx-auto mt-6 max-w-7xl px-5 text-[11px] text-white/25 sm:px-8 lg:px-10">Logo marks are placeholders — swap in approved client assets.</p>
+    <section
+      id="trust"
+      aria-label="Clients and Partners"
+      className="relative border-y border-[#E7E2EF] bg-white py-10"
+    >
+      <div className="mx-auto mb-6 flex max-w-7xl items-center gap-4 px-5 sm:px-8 lg:px-10">
+        <span className="eyebrow shrink-0 text-xs text-[#4D11A8]">
+          Trusted by Industry Leaders Across Dubai &amp; UAE
+        </span>
+        <span className="hairline-light flex-1" />
+      </div>
+
+      <LogoLoop
+        logos={logoItems}
+        speed={45}
+        gap={24}
+        logoHeight={44}
+        pauseOnHover
+        fadeOut
+        fadeOutColor="#FFFFFF"
+        ariaLabel="ZironPro client logos"
+      />
     </section>
   );
 }

@@ -1,37 +1,82 @@
 "use client";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import ScrollFloat from "@/components/ui/ScrollFloat";
-import { HOW_WE_WORK } from "@/lib/constants";
 
-function Step({ s }: { s: (typeof HOW_WE_WORK)[number] }) {
-  const ref = useRef<HTMLLIElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "start 0.4"] });
-  const opacity = useTransform(scrollYProgress, [0, 1], [0.25, 1]);
-  const x = useTransform(scrollYProgress, [0, 1], [-30, 0]);
-  const line = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  return (
-    <li ref={ref} className="relative border-b border-white/[0.09] py-10 sm:py-14">
-      <motion.span aria-hidden="true" style={{ scaleX: reduce ? 1 : line }} className="absolute bottom-[-1px] left-0 h-px w-full origin-left bg-gradient-to-r from-purple-secondary to-transparent" />
-      <motion.div style={{ opacity: reduce ? 1 : opacity, x: reduce ? 0 : x }} className="grid items-start gap-6 md:grid-cols-[minmax(7rem,0.45fr)_1fr_1fr] md:gap-12">
-        <span className="text-outline text-[clamp(4.5rem,11vw,9rem)] font-bold leading-[0.8] tracking-[-0.06em]">{s.number}</span>
-        <h3 className="display text-[clamp(1.8rem,3.4vw,2.8rem)] !leading-[1.05] text-white">{s.title}</h3>
-        <p className="max-w-md text-[15px] leading-7 text-muted">{s.description}</p>
-      </motion.div>
-    </li>
-  );
-}
+import { motion } from "framer-motion";
+import Reveal from "@/components/ui/Reveal";
+import { PROCESS_STEPS, EASE } from "@/lib/constants";
 
 export default function HowWeWork() {
   return (
-    <section id="process" className="relative bg-dark py-28 sm:py-36">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[500px] w-[80vw] max-w-[1000px] -translate-x-1/2 rounded-full bg-purple-primary/20 blur-[160px]" />
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <p className="eyebrow mb-4">How we work</p>
-        <ScrollFloat containerClassName="!my-0 mb-14 sm:mb-20" textClassName="display !text-[clamp(2.4rem,6.4vw,5.4rem)] !leading-[1.06] text-white">Built Around Your Brand</ScrollFloat>
-        <ol className="border-t border-white/[0.09]">{HOW_WE_WORK.map((s) => (<Step key={s.number} s={s} />))}</ol>
+    <section
+      id="process"
+      className="relative border-t border-[#E7E2EF] bg-[#F7F5FC] py-20 sm:py-24 lg:py-28"
+    >
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        
+        {/* HEADER */}
+        <div className="mb-12 max-w-2xl sm:mb-16">
+          <Reveal>
+            <span className="eyebrow mb-2 block text-[#4D11A8]">
+              Methodology &amp; Process
+            </span>
+            <h2 className="display-heading text-[#151515]">
+              How We Turn Strategy Into Scalable Revenue
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="display-subheading mt-3 text-base text-[#6B6B73] sm:text-lg">
+              A structured, data-driven 5-step process designed to eliminate wasted budget and accelerate growth.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* TIMELINE STEPS (Horizontal Desktop, Vertical Mobile) */}
+        <div className="relative">
+          {/* Timeline connecting line for desktop */}
+          <div
+            className="absolute left-0 top-1/2 hidden h-0.5 w-full -translate-y-1/2 bg-[#E7E2EF] lg:block"
+            aria-hidden="true"
+          />
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            {PROCESS_STEPS.map((step, index) => (
+              <motion.article
+                key={step.number}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.08,
+                  ease: EASE,
+                }}
+                className="group relative flex flex-col justify-between rounded-3xl border border-[#E7E2EF] bg-white p-6 shadow-sm transition-all duration-300 hover:border-[#4D11A8]/50 hover:shadow-lg"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#4D11A8] font-mono text-sm font-bold text-white shadow-md">
+                      {step.number}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-[#8F2CF4]">
+                      Phase 0{index + 1}
+                    </span>
+                  </div>
+
+                  <h3 className="text-base font-bold text-[#151515] transition-colors group-hover:text-[#4D11A8]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[#6B6B73]">
+                    {step.description}
+                  </p>
+                </div>
+
+                <div className="mt-6 border-t border-[#E7E2EF] pt-3 font-mono text-[10px] text-[#6B6B73]">
+                  Step 0{index + 1} of 05
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );
