@@ -4,6 +4,7 @@
  */
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
+import { MEDIA } from "@/components/data/media";
 
 export const NAV_ITEMS = [
   { label: "Home", href: "/" },
@@ -304,4 +305,18 @@ export const CONTACT = {
   location: "Dubai, United Arab Emirates",
   whatsapp: "https://wa.me/971500000000"
 };
+
+
+export const CLIENTS = [
+  { src: MEDIA.clients.maxline, name: "Maxline Global Logistics" },
+  { src: MEDIA.clients.piptan, name: "Piptan Investments" },
+  { src: MEDIA.clients.hundredPower, name: "100 Power" },
+  { src: MEDIA.clients.qordzSvg, name: "Qordz" },
+  { src: MEDIA.clients.directLs, name: "Direct Logic Systems" },
+  { src: MEDIA.clients.sphereIt, name: "Sphere IT Global" },
+  { src: MEDIA.clients.mc, name: "MC-Bauchemie" },
+  { src: MEDIA.clients.simplyKf, name: "Simply KF" },
+  { src: MEDIA.clients.smartKitchen, name: "Smart Kitchen" },
+  { src: MEDIA.clients.m2mtek, name: "M2MTek" },
+] as const;
 
