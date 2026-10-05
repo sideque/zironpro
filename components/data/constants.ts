@@ -1,5 +1,5 @@
 import { IconCheckmark } from "@/components/assets/icons/check";
-
+import { MEDIA } from "@/components/data/media";
 
 
 export const FEATURED_ITEMS = [
