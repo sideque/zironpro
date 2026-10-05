@@ -4,7 +4,6 @@ import UAEIntro from "@/components/home/UAEIntro";
 import Services from "@/components/home/Services";
 import CaseStudies from "@/components/home/CaseStudies";
 import Industries from "@/components/home/Industries";
-import HowWeWork from "@/components/home/HowWeWork";
 import WhyZironPro from "@/components/home/WhyZironPro";
 import Blog from "@/components/home/Blog";
 import FAQ from "@/components/home/FAQ";
@@ -19,7 +18,6 @@ export default function HomePage() {
       <Services />
       <CaseStudies />
       <Industries />
-      <HowWeWork />
       <WhyZironPro />
       <Blog />
       <FAQ />
