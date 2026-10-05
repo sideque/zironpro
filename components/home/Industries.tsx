@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Building2, Stethoscope, Car, Truck, GraduationCap, Laptop, ShoppingBag, Hotel, Briefcase, Gem, Rocket } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { INDUSTRIES, EASE } from "@/lib/constants";
+import Lightning from "@/components/ui/Lightning/Lightning";
 
 const ICON_LIST = [
   Building2,
@@ -25,6 +26,14 @@ export default function Industries() {
       id="industries"
       className="relative bg-white py-20 sm:py-24 lg:py-28"
     >
+
+      <Lightning
+                hue={270}
+                xOffset={0}
+                speed={0.45}
+                intensity={0.55}
+                size={1}
+              />
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         
         {/* HEADER */}

@@ -40,9 +40,6 @@ export default function UAEIntro() {
         lg:py-28
       "
     >
-      {/* =========================================================
-          IRIDESCENCE BACKGROUND
-      ========================================================= */}
 
       <div
         aria-hidden="true"
@@ -120,11 +117,6 @@ export default function UAEIntro() {
           blur-[100px]
         "
       />
-
-      {/* =========================================================
-          CONTENT
-          IMPORTANT: z-10 keeps content ABOVE IRIDESCENCE
-      ========================================================= */}
 
       <div
         className="

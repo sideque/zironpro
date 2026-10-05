@@ -62,10 +62,6 @@ export default function Services() {
         "
       />
 
-      {/* =====================================================
-          PURPLE LIGHTNING
-      ===================================================== */}
-
       <div
         className="
           pointer-events-none
@@ -85,10 +81,6 @@ export default function Services() {
         />
       </div>
 
-      {/* =====================================================
-          LIGHT PURPLE OVERLAY
-      ===================================================== */}
-
       <div
         className="
           pointer-events-none
@@ -99,14 +91,7 @@ export default function Services() {
         "
       />
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
-
       <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        {/* =================================================
-            HEADER
-        ================================================= */}
 
         <div className="mb-12 max-w-2xl sm:mb-16">
           <Reveal>
