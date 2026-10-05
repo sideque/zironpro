@@ -1,11 +1,26 @@
 .iridescence-container {
+  position: absolute;
+  inset: 0;
+
   width: 100%;
   height: 100%;
+
   overflow: hidden;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  touch-action: none;
 }
 
 .iridescence-container canvas {
   display: block;
+
   width: 100%;
   height: 100%;
+
+  max-width: none;
+
+  pointer-events: none;
 }
