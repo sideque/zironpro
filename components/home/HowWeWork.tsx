@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 import { PROCESS_STEPS, EASE } from "@/lib/constants";
-
 export default function HowWeWork() {
   return (
     <section
