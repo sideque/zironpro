@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 import Reveal from "@/components/ui/Reveal";
-import Lightning from "@/components/ui/Lightning/Lightning";
+import Plasma from "@/components/ui/Plasma/Plasma";
 
 import { SERVICES, EASE } from "@/lib/constants";
 
@@ -48,51 +48,79 @@ export default function Services() {
         lg:py-28
       "
     >
-      {/* =====================================================
-          SOFT PURPLE BACKGROUND
-      ===================================================== */}
-
+      {/* =========================================================
+          BASE PURPLE BACKGROUND
+      ========================================================== */}
       <div
+        aria-hidden="true"
         className="
           pointer-events-none
           absolute
           inset-0
-          -z-30
-          bg-[radial-gradient(circle_at_15%_20%,rgba(143,44,244,0.18),transparent_32%),radial-gradient(circle_at_85%_70%,rgba(77,17,168,0.14),transparent_35%),linear-gradient(135deg,#F7F5FC_0%,#EEE4FF_50%,#F7F5FC_100%)]
+          z-0
+          bg-[radial-gradient(circle_at_15%_20%,rgba(143,44,244,0.20),transparent_32%),radial-gradient(circle_at_85%_70%,rgba(77,17,168,0.16),transparent_35%),linear-gradient(135deg,#F7F5FC_0%,#EEE4FF_50%,#F7F5FC_100%)]
         "
       />
 
+      {/* =========================================================
+          PLASMA FULL SECTION BACKGROUND
+      ========================================================== */}
       <div
+        aria-hidden="true"
         className="
           pointer-events-none
           absolute
           inset-0
-          -z-20
+          z-[1]
           overflow-hidden
-          opacity-60
+          opacity-70
         "
       >
-        <Lightning
-          hue={270}
-          xOffset={0}
-          speed={0.45}
-          intensity={0.55}
-          size={1}
+        <Plasma
+          color="#B497CF"
+          speed={0.7}
+          direction="forward"
+          scale={1}
+          opacity={1}
+          mouseInteractive={false}
+          renderScale={0.55}
+          maxDpr={1.5}
+          targetFps={60}
+          iterations={60}
         />
       </div>
 
+      {/* =========================================================
+          WHITE SOFT OVERLAY
+      ========================================================== */}
       <div
+        aria-hidden="true"
         className="
           pointer-events-none
           absolute
           inset-0
-          -z-10
-          bg-white/35
+          z-[2]
+          bg-white/45
         "
       />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-
+      {/* =========================================================
+          CONTENT
+      ========================================================== */}
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          max-w-7xl
+          px-5
+          sm:px-8
+          lg:px-10
+        "
+      >
+        {/* =====================================================
+            HEADER
+        ====================================================== */}
         <div className="mb-12 max-w-2xl sm:mb-16">
           <Reveal>
             <span className="eyebrow mb-2 block text-[#4D11A8]">
@@ -113,14 +141,12 @@ export default function Services() {
           </Reveal>
         </div>
 
-        {/* =================================================
+        {/* =====================================================
             SERVICES GRID
-        ================================================= */}
-
+        ====================================================== */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, index) => {
-            const Icon =
-              ICON_MAP[service.id] || TrendingUp;
+            const Icon = ICON_MAP[service.id] || TrendingUp;
 
             return (
               <motion.article
@@ -152,7 +178,7 @@ export default function Services() {
                   rounded-3xl
                   border
                   border-[#E0D3F2]
-                  bg-white/80
+                  bg-white/85
                   p-7
                   shadow-[0_10px_40px_rgba(77,17,168,0.06)]
                   backdrop-blur-md
@@ -161,21 +187,24 @@ export default function Services() {
                   hover:-translate-y-1
                   hover:border-[#4D11A8]/40
                   hover:bg-white
-                  hover:shadow-[0_20px_50px_rgba(77,17,168,0.12)]
+                  hover:shadow-[0_20px_50px_rgba(77,17,168,0.14)]
                 "
               >
-                {/* CARD GLOW */}
-
+                {/* =================================================
+                    CARD PURPLE GLOW
+                ================================================== */}
                 <div
+                  aria-hidden="true"
                   className="
                     pointer-events-none
                     absolute
-                    -right-16
-                    -top-16
-                    h-32
-                    w-32
+                    -right-20
+                    -top-20
+                    h-40
+                    w-40
                     rounded-full
-                    bg-[#8F2CF4]/10
+                    bg-[#8F2CF4]/15
+                    opacity-0
                     blur-3xl
                     transition-opacity
                     duration-500
@@ -183,9 +212,8 @@ export default function Services() {
                   "
                 />
 
-                <div className="relative">
+                <div className="relative z-10">
                   {/* TOP CARD HEADER */}
-
                   <div className="flex items-center justify-between">
                     <div
                       className="
@@ -223,7 +251,6 @@ export default function Services() {
                   </div>
 
                   {/* TITLE */}
-
                   <h3
                     className="
                       mt-6
@@ -240,7 +267,6 @@ export default function Services() {
                   </h3>
 
                   {/* DESCRIPTION */}
-
                   <p
                     className="
                       mt-2.5
@@ -253,7 +279,6 @@ export default function Services() {
                   </p>
 
                   {/* ITEMS */}
-
                   <ul
                     className="
                       mt-5
@@ -277,10 +302,7 @@ export default function Services() {
                       >
                         <CheckCircle2
                           size={13}
-                          className="
-                            shrink-0
-                            text-[#8F2CF4]
-                          "
+                          className="shrink-0 text-[#8F2CF4]"
                         />
 
                         <span>{item}</span>
@@ -289,16 +311,20 @@ export default function Services() {
                   </ul>
                 </div>
 
-                {/* BOTTOM LINK */}
-
+                {/* =================================================
+                    BOTTOM LINK
+                ================================================== */}
                 <div
                   className="
                     relative
+                    z-10
                     mt-6
                     flex
                     items-center
                     justify-between
-                    pt-2
+                    border-t
+                    border-[#E7E2EF]
+                    pt-4
                   "
                 >
                   <a
@@ -314,9 +340,7 @@ export default function Services() {
                       group-hover:text-[#8F2CF4]
                     "
                   >
-                    <span>
-                      Request Service Proposal
-                    </span>
+                    <span>Request Service Proposal</span>
 
                     <ArrowUpRight
                       size={14}
