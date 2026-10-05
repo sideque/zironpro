@@ -2,41 +2,14 @@
 
 import { ArrowUpRight } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
-import Iridescence from "@/components/ui/Iridescence/Iridescence";
 import { CASES } from "@/lib/constants";
 
 export default function CaseStudies() {
   return (
     <section
       id="case-studies"
-      className="relative isolate overflow-hidden border-y border-[#E7E2EF] bg-[#F7F5FC] py-20 sm:py-24 lg:py-28"
+      className="relative isolate overflow-hidden border-y border-[#E7E2EF] bg-transparent py-20 sm:py-24 lg:py-28"
     >
-      {/* =========================================================
-          PURPLE IRIDESCENCE BACKGROUND
-      ========================================================= */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-      >
-        <div className="absolute inset-0 opacity-70">
-          <Iridescence
-            color={[0.32, 0.08, 0.65]}
-            mouseReact={true}
-            amplitude={0.08}
-            speed={0.45}
-          />
-        </div>
-
-        {/* Soft white overlay for readability */}
-        <div className="absolute inset-0 bg-white/55" />
-
-        {/* Extra subtle purple glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(143,44,244,0.18),transparent_55%)]" />
-      </div>
-
-      {/* =========================================================
-          CONTENT
-      ========================================================= */}
       <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
 
         {/* =======================================================

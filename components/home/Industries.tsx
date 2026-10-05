@@ -18,7 +18,6 @@ import {
 
 import Reveal from "@/components/ui/Reveal";
 import { INDUSTRIES, EASE } from "@/lib/constants";
-import Plasma from "@/components/ui/Plasma/Plasma";
 
 const ICON_LIST = [
   Building2,
@@ -44,53 +43,12 @@ export default function Industries() {
         overflow-hidden
         border-y
         border-[#E7E2EF]
-        bg-white
+        bg-transparent
         py-20
         sm:py-24
         lg:py-28
       "
     >
-      {/* =========================================================
-          PLASMA BACKGROUND
-      ========================================================== */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-0
-          overflow-hidden
-        "
-      >
-        <Plasma
-          color="#B497CF"
-          speed={1}
-          direction="forward"
-          scale={1}
-          opacity={0.75}
-          mouseInteractive={false}
-          renderScale={0.55}
-          maxDpr={1.5}
-          targetFps={60}
-          iterations={60}
-        />
-      </div>
-
-      {/* =========================================================
-          SOFT WHITE OVERLAY
-          Keeps the purple background subtle
-      ========================================================== */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-          bg-white/55
-        "
-      />
 
       {/* =========================================================
           CONTENT

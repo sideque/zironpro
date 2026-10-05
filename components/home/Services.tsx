@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 
 import Reveal from "@/components/ui/Reveal";
-import Plasma from "@/components/ui/Plasma/Plasma";
 
 import { SERVICES, EASE } from "@/lib/constants";
 
@@ -42,67 +41,12 @@ export default function Services() {
         overflow-hidden
         border-y
         border-[#E7E2EF]
-        bg-[#F4EEFF]
+        bg-transparent
         py-20
         sm:py-24
         lg:py-28
       "
     >
-      {/* =========================================================
-          BASE PURPLE BACKGROUND
-      ========================================================== */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-0
-          bg-[radial-gradient(circle_at_15%_20%,rgba(143,44,244,0.20),transparent_32%),radial-gradient(circle_at_85%_70%,rgba(77,17,168,0.16),transparent_35%),linear-gradient(135deg,#F7F5FC_0%,#EEE4FF_50%,#F7F5FC_100%)]
-        "
-      />
-
-      {/* =========================================================
-          PLASMA FULL SECTION BACKGROUND
-      ========================================================== */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-          overflow-hidden
-          opacity-70
-        "
-      >
-        <Plasma
-          color="#B497CF"
-          speed={0.7}
-          direction="forward"
-          scale={1}
-          opacity={1}
-          mouseInteractive={false}
-          renderScale={0.55}
-          maxDpr={1.5}
-          targetFps={60}
-          iterations={60}
-        />
-      </div>
-
-      {/* =========================================================
-          WHITE SOFT OVERLAY
-      ========================================================== */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[2]
-          bg-white/45
-        "
-      />
 
       {/* =========================================================
           CONTENT

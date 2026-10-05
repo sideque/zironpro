@@ -1,7 +1,6 @@
 "use client";
 
 import Reveal from "@/components/ui/Reveal";
-import Iridescence from "@/components/ui/Iridescence/Iridescence";
 import ScrollReveal from "@/components/ui/ScrollReveal/ScrollReveal";
 
 const NODES = [
@@ -35,35 +34,12 @@ export default function UAEIntro() {
         overflow-hidden
         border-b
         border-[#E7E2EF]
+        bg-transparent
         py-20
         sm:py-24
         lg:py-28
       "
     >
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-0"
-      >
-        <Iridescence
-          color={[0.32, 0.08, 0.65]}
-          mouseReact={true}
-          amplitude={0.08}
-          speed={0.45}
-        />
-      </div>
-
-      {/* Soft white/purple overlay */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-          bg-white/55
-        "
-      />
 
       {/* =========================================================
           AMBIENT GLOWS

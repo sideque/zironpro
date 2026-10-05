@@ -5,7 +5,6 @@ import { ArrowUpRight, BookOpen } from "lucide-react";
 
 import Reveal from "@/components/ui/Reveal";
 import { BLOGS, EASE } from "@/lib/constants";
-import Iridescence from "@/components/ui/Iridescence/Iridescence";
 
 export default function Blog() {
   return (
@@ -17,52 +16,12 @@ export default function Blog() {
         overflow-hidden
         border-t
         border-[#E7E2EF]
-        bg-[#F7F5FC]
+        bg-transparent
         py-20
         sm:py-24
         lg:py-28
       "
     >
-      {/* =================================================
-          IRIDESCENCE BACKGROUND
-      ================================================= */}
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-0
-          opacity-60
-        "
-      >
-        <Iridescence
-          color={[0.32, 0.08, 0.65]}
-          mouseReact={true}
-          amplitude={0.08}
-          speed={0.45}
-        />
-      </div>
-
-      {/* =================================================
-          SOFT WHITE OVERLAY
-      ================================================= */}
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-[1]
-          bg-white/40
-        "
-      />
-
-      {/* =================================================
-          CONTENT
-      ================================================= */}
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
 

@@ -10,7 +10,6 @@ import {
 import Link from "next/link";
 
 import BlurText from "@/components/ui/Blurtext";
-import Iridescence from "@/components/ui/Iridescence/Iridescence";
 import { EASE } from "@/lib/constants";
 
 export default function Hero() {
@@ -28,21 +27,9 @@ export default function Hero() {
 
   return (
     <section
-      className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-white pb-16 pt-28 md:pt-32"
+      className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-transparent pb-16 pt-28 md:pt-32"
       aria-label="Introduction"
     >
-      {/* Iridescence Background */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <Iridescence
-          color={[0.32, 0.08, 0.65]}
-          mouseReact={true}
-          amplitude={0.08}
-          speed={0.45}
-        />
-      </div>
-
-      {/* Background Overlay */}
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-white/60" />
 
       {/* Ambient Glow */}
       <div

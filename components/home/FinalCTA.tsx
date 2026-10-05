@@ -3,13 +3,12 @@
 import { ArrowUpRight, Mail, MapPin, MessageSquare } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { CONTACT } from "@/lib/constants";
-import Plasma from "@/components/ui/Plasma/Plasma";
 
 export default function FinalCTA() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-white py-20 sm:py-24"
+      className="relative overflow-hidden bg-transparent py-20 sm:py-24"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div
@@ -33,34 +32,7 @@ export default function FinalCTA() {
             lg:px-16
           "
         >
-          {/* =================================================
-              PLASMA BACKGROUND
-          ================================================= */}
 
-          <div
-            aria-hidden="true"
-            className="
-              pointer-events-none
-              absolute
-              inset-0
-              z-0
-              overflow-hidden
-              opacity-75
-            "
-          >
-            <Plasma
-              color="#B497CF"
-              speed={1}
-              direction="forward"
-              scale={1}
-              opacity={0.75}
-              mouseInteractive={false}
-              renderScale={0.55}
-              maxDpr={1.5}
-              targetFps={60}
-              iterations={60}
-            />
-          </div>
 
           {/* =================================================
               DARK OVERLAY

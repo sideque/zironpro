@@ -18,7 +18,7 @@ export default function TrustLogos() {
         overflow-hidden
         border-y
         border-[#E7E2EF]
-        bg-[#FAF8FB]
+        bg-transparent
       "
     >
       <div
@@ -99,7 +99,7 @@ export default function TrustLogos() {
               z-20
               w-10
               bg-gradient-to-r
-              from-[#FAF8FB]
+              from-white/60
               to-transparent
 
               sm:w-14
@@ -117,7 +117,7 @@ export default function TrustLogos() {
               z-20
               w-10
               bg-gradient-to-l
-              from-[#FAF8FB]
+              from-white/60
               to-transparent
 
               sm:w-14

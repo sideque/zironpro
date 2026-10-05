@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 import Reveal from "@/components/ui/Reveal";
-import Plasma from "@/components/ui/Plasma/Plasma";
 import { FAQS, EASE } from "@/lib/constants";
 
 export default function FAQ() {
@@ -24,55 +23,12 @@ export default function FAQ() {
         overflow-hidden
         border-y
         border-[#E7E2EF]
-        bg-[#F7F5FC]
+        bg-transparent
         py-20
         sm:py-24
         lg:py-28
       "
     >
-      {/* =================================================
-          PLASMA BACKGROUND
-      ================================================= */}
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-0
-          overflow-hidden
-        "
-      >
-        <Plasma
-          color="#B497CF"
-          speed={1}
-          direction="forward"
-          scale={1}
-          opacity={0.75}
-          mouseInteractive={false}
-          renderScale={0.55}
-          maxDpr={1.5}
-          targetFps={60}
-          iterations={60}
-        />
-      </div>
-
-      {/* =================================================
-          SOFT WHITE OVERLAY
-          Keeps the FAQ text readable
-      ================================================= */}
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          z-0
-          bg-white/35
-        "
-      />
 
       {/* =================================================
           CONTENT

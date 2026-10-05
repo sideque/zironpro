@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, BarChart3, Bot, Layers, ShieldCheck, Zap } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { WHY_ZIRONPRO, EASE } from "@/lib/constants";
-import Plasma from "@/components/ui/Plasma/Plasma";
 
 const ICON_MAP = [BarChart3, Bot, ShieldCheck, Layers];
 
@@ -12,34 +11,10 @@ export default function WhyZironPro() {
   return (
     <section
       id="why-zironpro"
-      className="relative bg-white py-20 sm:py-24 lg:py-28"
+      className="relative bg-transparent py-20 sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         
-        {/* SPLIT LAYOUT */}
-         <div
-                aria-hidden="true"
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-0
-                  z-0
-                  overflow-hidden
-                "
-              >
-                <Plasma
-                  color="#B497CF"
-                  speed={1}
-                  direction="forward"
-                  scale={1}
-                  opacity={0.75}
-                  mouseInteractive={false}
-                  renderScale={0.55}
-                  maxDpr={1.5}
-                  targetFps={60}
-                  iterations={60}
-                />
-              </div>
         <div className="grid gap-12 lg:grid-cols-12 lg:items-start lg:gap-16">
           
           {/* LEFT: HEADING & DESCRIPTION (5 Cols) */}
