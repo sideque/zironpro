@@ -1,370 +1,129 @@
-"use client";
+'use client';
 
-import {
-  Renderer,
-  Program,
-  Mesh,
-  Color,
-  Triangle,
-} from "ogl";
-import { useEffect, useRef } from "react";
+import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
+import { useEffect, useRef } from 'react';
 
-import "./Iridescence.css";
+import './Iridescence.css';
 
 const vertexShader = `
-  attribute vec2 uv;
-  attribute vec2 position;
+attribute vec2 uv;
+attribute vec2 position;
 
-  varying vec2 vUv;
+varying vec2 vUv;
 
-  void main() {
-    vUv = uv;
-    gl_Position = vec4(position, 0.0, 1.0);
-  }
+void main() {
+  vUv = uv;
+  gl_Position = vec4(position, 0, 1);
+}
 `;
 
 const fragmentShader = `
-  precision highp float;
+precision highp float;
 
-  uniform float uTime;
-  uniform vec3 uColor;
-  uniform vec3 uResolution;
-  uniform vec2 uMouse;
-  uniform float uAmplitude;
-  uniform float uSpeed;
+uniform float uTime;
+uniform vec3 uColor;
+uniform vec3 uResolution;
+uniform vec2 uMouse;
+uniform float uAmplitude;
+uniform float uSpeed;
 
-  varying vec2 vUv;
+varying vec2 vUv;
 
-  void main() {
+void main() {
+  float mr = min(uResolution.x, uResolution.y);
+  vec2 uv = (vUv.xy * 2.0 - 1.0) * uResolution.xy / mr;
 
-    float mr = min(uResolution.x, uResolution.y);
+  uv += (uMouse - vec2(0.5)) * uAmplitude;
 
-    vec2 uv =
-      (vUv.xy * 2.0 - 1.0)
-      * uResolution.xy
-      / mr;
-
-    /*
-      Very subtle mouse movement.
-    */
-    uv += (uMouse - vec2(0.5)) * uAmplitude;
-
-    /*
-      Slow animation.
-    */
-    float time = uTime * uSpeed;
-
-    float d = -time * 0.35;
-    float a = 0.0;
-
-    for (float i = 0.0; i < 8.0; i++) {
-
-      a += cos(
-        i - d - a * uv.x
-      );
-
-      d += sin(
-        uv.y * i + a
-      ) * 0.08;
-    }
-
-    d += time * 0.35;
-
-    /*
-      Create smooth color field.
-    */
-    vec3 col = vec3(
-      cos(uv.x * d + a) * 0.5 + 0.5,
-      cos(uv.y * a - d) * 0.5 + 0.5,
-      cos(a + d) * 0.5 + 0.5
-    );
-
-    /*
-      Smooth purple tint.
-    */
-    col = mix(
-      vec3(0.82, 0.76, 0.94),
-      col,
-      0.18
-    );
-
-    /*
-      Apply brand color.
-    */
-    col *= uColor;
-
-    /*
-      Keep background bright.
-    */
-    col = mix(
-      vec3(0.94, 0.91, 0.98),
-      col,
-      0.32
-    );
-
-    /*
-      Very subtle vignette.
-    */
-    float vignette =
-      smoothstep(
-        1.35,
-        0.15,
-        length(uv)
-      );
-
-    col *= mix(
-      0.96,
-      1.04,
-      vignette
-    );
-
-    gl_FragColor =
-      vec4(col, 1.0);
+  float d = -uTime * 0.5 * uSpeed;
+  float a = 0.0;
+  for (float i = 0.0; i < 8.0; ++i) {
+    a += cos(i - d - a * uv.x);
+    d += sin(uv.y * i + a);
   }
+  d += uTime * 0.5 * uSpeed;
+  vec3 col = vec3(cos(uv * vec2(d, a)) * 0.6 + 0.4, cos(a + d) * 0.5 + 0.5);
+  col = cos(col * cos(vec3(d, a, 2.5)) * 0.5 + 0.5) * uColor;
+  gl_FragColor = vec4(col, 1.0);
+}
 `;
 
-export default function Iridescence({
-  color = [0.65, 0.35, 1],
-  speed = 0.18,
-  amplitude = 0.035,
-  mouseReact = true,
-  className = "",
-}) {
-  const containerRef = useRef(null);
-
-  const mouseRef = useRef({
-    x: 0.5,
-    y: 0.5,
-  });
+export default function Iridescence({ color = [1, 1, 1], speed = 1.0, amplitude = 0.1, mouseReact = true, ...rest }) {
+  const ctnDom = useRef(null);
+  const mousePos = useRef({ x: 0.5, y: 0.5 });
 
   useEffect(() => {
-    const container =
-      containerRef.current;
-
-    if (!container) return;
-
-    const renderer = new Renderer({
-      alpha: true,
-      antialias: true,
-      dpr: Math.min(
-        window.devicePixelRatio || 1,
-        2
-      ),
-    });
-
+    if (!ctnDom.current) return;
+    const ctn = ctnDom.current;
+    const renderer = new Renderer();
     const gl = renderer.gl;
+    gl.clearColor(1, 1, 1, 1);
 
-    gl.clearColor(
-      0.94,
-      0.91,
-      0.98,
-      1
-    );
+    let program;
 
-    const geometry =
-      new Triangle(gl);
-
-    const program =
-      new Program(gl, {
-        vertex: vertexShader,
-        fragment: fragmentShader,
-
-        uniforms: {
-          uTime: {
-            value: 0,
-          },
-
-          uColor: {
-            value: new Color(
-              ...color
-            ),
-          },
-
-          uResolution: {
-            value: new Color(
-              1,
-              1,
-              1
-            ),
-          },
-
-          uMouse: {
-            value:
-              new Float32Array([
-                0.5,
-                0.5,
-              ]),
-          },
-
-          uAmplitude: {
-            value: amplitude,
-          },
-
-          uSpeed: {
-            value: speed,
-          },
-        },
-      });
-
-    const mesh = new Mesh(gl, {
-      geometry,
-      program,
-    });
-
-    const resize = () => {
-      const width =
-        container.clientWidth;
-
-      const height =
-        container.clientHeight;
-
-      renderer.setSize(
-        width,
-        height
-      );
-
-      program.uniforms.uResolution.value =
-        new Color(
+    function resize() {
+      const scale = 1;
+      renderer.setSize(ctn.offsetWidth * scale, ctn.offsetHeight * scale);
+      if (program) {
+        program.uniforms.uResolution.value = new Color(
           gl.canvas.width,
           gl.canvas.height,
-          gl.canvas.width /
-            gl.canvas.height
+          gl.canvas.width / gl.canvas.height
         );
-    };
-
+      }
+    }
+    window.addEventListener('resize', resize, false);
     resize();
 
-    window.addEventListener(
-      "resize",
-      resize
-    );
+    const geometry = new Triangle(gl);
+    program = new Program(gl, {
+      vertex: vertexShader,
+      fragment: fragmentShader,
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new Color(...color) },
+        uResolution: {
+          value: new Color(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height)
+        },
+        uMouse: { value: new Float32Array([mousePos.current.x, mousePos.current.y]) },
+        uAmplitude: { value: amplitude },
+        uSpeed: { value: speed }
+      }
+    });
 
-    const handleMouseMove = (event) => {
-      if (!mouseReact) return;
+    const mesh = new Mesh(gl, { geometry, program });
+    let animateId;
 
-      const rect =
-        container.getBoundingClientRect();
+    function update(t) {
+      animateId = requestAnimationFrame(update);
+      program.uniforms.uTime.value = t * 0.001;
+      renderer.render({ scene: mesh });
+    }
+    animateId = requestAnimationFrame(update);
+    ctn.appendChild(gl.canvas);
 
-      const x =
-        (event.clientX -
-          rect.left) /
-        rect.width;
-
-      const y =
-        1 -
-        (event.clientY -
-          rect.top) /
-          rect.height;
-
-      mouseRef.current = {
-        x,
-        y,
-      };
-
-      /*
-        Smooth mouse interpolation
-        is handled in animation.
-      */
-    };
-
+    function handleMouseMove(e) {
+      const rect = ctn.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = 1.0 - (e.clientY - rect.top) / rect.height;
+      mousePos.current = { x, y };
+      program.uniforms.uMouse.value[0] = x;
+      program.uniforms.uMouse.value[1] = y;
+    }
     if (mouseReact) {
-      container.addEventListener(
-        "mousemove",
-        handleMouseMove
-      );
+      ctn.addEventListener('mousemove', handleMouseMove);
     }
 
-    let animationId = 0;
-
-    let smoothMouseX = 0.5;
-    let smoothMouseY = 0.5;
-
-    const animate = (
-      time
-    ) => {
-      animationId =
-        requestAnimationFrame(
-          animate
-        );
-
-      /*
-        Smooth mouse movement.
-      */
-      smoothMouseX +=
-        (mouseRef.current.x -
-          smoothMouseX) *
-        0.035;
-
-      smoothMouseY +=
-        (mouseRef.current.y -
-          smoothMouseY) *
-        0.035;
-
-      program.uniforms.uMouse.value[0] =
-        smoothMouseX;
-
-      program.uniforms.uMouse.value[1] =
-        smoothMouseY;
-
-      program.uniforms.uTime.value =
-        time * 0.001;
-
-      renderer.render({
-        scene: mesh,
-      });
-    };
-
-    animationId =
-      requestAnimationFrame(
-        animate
-      );
-
-    container.appendChild(
-      gl.canvas
-    );
-
     return () => {
-      cancelAnimationFrame(
-        animationId
-      );
-
-      window.removeEventListener(
-        "resize",
-        resize
-      );
-
+      cancelAnimationFrame(animateId);
+      window.removeEventListener('resize', resize);
       if (mouseReact) {
-        container.removeEventListener(
-          "mousemove",
-          handleMouseMove
-        );
+        ctn.removeEventListener('mousemove', handleMouseMove);
       }
-
-      if (
-        gl.canvas.parentNode ===
-        container
-      ) {
-        container.removeChild(
-          gl.canvas
-        );
-      }
-
-      gl.getExtension(
-        "WEBGL_lose_context"
-      )?.loseContext();
+      ctn.removeChild(gl.canvas);
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [
-    color,
-    speed,
-    amplitude,
-    mouseReact,
-  ]);
+  }, [color, speed, amplitude, mouseReact]);
 
-  return (
-    <div
-      ref={containerRef}
-      className={`iridescence-container ${className}`}
-      aria-hidden="true"
-    />
-  );
+  return <div ref={ctnDom} className="iridescence-container" {...rest} />;
 }

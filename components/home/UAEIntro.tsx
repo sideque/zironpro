@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "@/components/ui/Reveal";
+import Iridescence from "@/components/ui/Iridescence/Iridescence";
 import ScrollReveal from "@/components/ui/ScrollReveal/ScrollReveal";
 
 const NODES = [
@@ -30,29 +31,76 @@ export default function UAEIntro() {
       id="about"
       className="
         relative
+        isolate
         overflow-hidden
         border-b
         border-[#E7E2EF]
-        bg-[#F7F5FC]
         py-20
         sm:py-24
         lg:py-28
       "
     >
-      {/* Background decoration */}
+      {/* =========================================================
+          IRIDESCENCE BACKGROUND
+      ========================================================= */}
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0"
+      >
+        <Iridescence
+          color={[0.32, 0.08, 0.65]}
+          mouseReact={true}
+          amplitude={0.08}
+          speed={0.45}
+        />
+      </div>
+
+      {/* Soft white/purple overlay */}
       <div
         aria-hidden="true"
         className="
           pointer-events-none
           absolute
-          left-1/2
-          top-0
+          inset-0
+          z-[1]
+          bg-white/55
+        "
+      />
+
+      {/* =========================================================
+          AMBIENT GLOWS
+      ========================================================= */}
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          -right-32
+          -top-32
+          z-[2]
           h-[500px]
-          w-[700px]
-          -translate-x-1/2
+          w-[500px]
           rounded-full
-          bg-[#8F2CF4]/[0.06]
-          blur-[120px]
+          bg-[#F1EAFE]/50
+          blur-[110px]
+        "
+      />
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          -bottom-32
+          -left-32
+          z-[2]
+          h-[450px]
+          w-[450px]
+          rounded-full
+          bg-[#F7F5FC]/60
+          blur-[100px]
         "
       />
 
@@ -63,23 +111,46 @@ export default function UAEIntro() {
           absolute
           -left-40
           top-1/2
+          z-[2]
           h-[400px]
           w-[400px]
+          -translate-y-1/2
           rounded-full
-          bg-[#4D11A8]/[0.04]
+          bg-[#4D11A8]/[0.05]
           blur-[100px]
         "
       />
 
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
+      {/* =========================================================
+          CONTENT
+          IMPORTANT: z-10 keeps content ABOVE IRIDESCENCE
+      ========================================================= */}
 
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          max-w-7xl
+          px-5
+          sm:px-8
+          lg:px-10
+        "
+      >
+        <div
+          className="
+            grid
+            gap-12
+            lg:grid-cols-12
+            lg:items-center
+            lg:gap-16
+          "
+        >
           {/* =====================================================
               LEFT COLUMN
           ===================================================== */}
 
           <div className="lg:col-span-7">
-
             {/* Label */}
             <Reveal>
               <div
@@ -91,10 +162,11 @@ export default function UAEIntro() {
                   rounded-full
                   border
                   border-[#E7E2EF]
-                  bg-white
+                  bg-white/90
                   px-3
                   py-1
                   shadow-sm
+                  backdrop-blur-sm
                 "
               >
                 <span
@@ -114,12 +186,11 @@ export default function UAEIntro() {
             </Reveal>
 
             {/* =================================================
-                MAIN HEADING — SCROLL REVEAL
+                MAIN HEADING
 
                 IMPORTANT:
-                No text-[...] class here.
-                Your existing display-heading controls
-                the font size.
+                No font-size is added here.
+                display-heading controls the size.
             ================================================= */}
 
             <ScrollReveal
@@ -134,7 +205,7 @@ export default function UAEIntro() {
             </ScrollReveal>
 
             {/* =================================================
-                DESCRIPTION — SCROLL REVEAL
+                DESCRIPTION
             ================================================= */}
 
             <div className="mt-7 max-w-2xl">
@@ -149,15 +220,15 @@ export default function UAEIntro() {
                   font-normal
                   leading-7
                   tracking-[-0.01em]
-                  text-[#6B6B73]
+                  text-[#5F5F68]
                   sm:text-lg
                   sm:leading-8
                 "
               >
-                ZironPro is strategically positioned in Dubai, combining deep
-                regional market intelligence with cutting-edge AI and growth
-                tactics. We help UAE companies turn interest into qualified
-                leads, contracts, and market authority.
+                ZironPro is strategically positioned in Dubai, combining
+                deep regional market intelligence with cutting-edge AI and
+                growth tactics. We help UAE companies turn interest into
+                qualified leads, contracts, and market authority.
               </ScrollReveal>
             </div>
 
@@ -248,12 +319,13 @@ export default function UAEIntro() {
                 rounded-3xl
                 border
                 border-[#E7E2EF]
-                bg-white
+                bg-white/95
                 p-6
-                shadow-md
+                shadow-[0_20px_60px_rgba(77,17,168,0.14)]
+                backdrop-blur-sm
               "
             >
-              {/* Card header */}
+              {/* Card Header */}
               <div
                 className="
                   mb-4
@@ -289,7 +361,10 @@ export default function UAEIntro() {
                 </span>
               </div>
 
-              {/* Map */}
+              {/* =================================================
+                  UAE MAP
+              ================================================= */}
+
               <div className="relative h-[280px] w-full">
                 <svg
                   viewBox="0 0 100 100"
@@ -361,7 +436,7 @@ export default function UAEIntro() {
                     }}
                   >
                     <span className="relative flex items-center justify-center">
-                      {/* Ping effect for Dubai */}
+                      {/* Dubai pulse */}
                       {node.main && (
                         <span
                           className="
