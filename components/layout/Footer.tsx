@@ -18,7 +18,7 @@ import { CONTACT, NAV_ITEMS, SERVICES } from "@/lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-[#E7E2EF] bg-[#F7F5FC] text-[#151515]">
+    <footer className="relative border-t text-[#151515]">
       <div className="mx-auto max-w-7xl px-5 pb-10 pt-16 sm:px-8 lg:px-10">
 
         {/* =========================
