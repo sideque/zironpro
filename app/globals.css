@@ -1,57 +1,439 @@
 @import "tailwindcss";
 
+/* =========================================================
+   ZIRON PRO — GLOBAL DESIGN SYSTEM
+   Light / White + Purple Premium Theme
+   ========================================================= */
+
 :root {
+  /* =======================================================
+     BRAND COLORS
+     ======================================================= */
+
   --purple-primary: #4d11a8;
   --purple-secondary: #8f2cf4;
   --purple-accent: #6620ee;
+
+  /* Deep purple shades */
   --navy: #170349;
   --dark: #0d1420;
   --ink: #070a12;
-  --soft-white: #f4f1fb;
-  --background: var(--dark);
-  --foreground: var(--soft-white);
-  --muted: rgb(244 241 251 / 0.56);
-  --border: rgb(255 255 255 / 0.09);
-  --border-strong: rgb(255 255 255 / 0.16);
-  --glass: rgb(255 255 255 / 0.035);
-  --glow: rgb(143 44 244 / 0.35);
+
+  /* Light theme */
+  --soft-white: #f8f7fc;
+  --white: #ffffff;
+  --background: #ffffff;
+  --foreground: #151515;
+
+  /* Text */
+  --muted: rgb(21 21 21 / 0.62);
+  --muted-light: rgb(21 21 21 / 0.45);
+
+  /* Borders */
+  --border: rgb(21 21 21 / 0.08);
+  --border-strong: rgb(21 21 21 / 0.14);
+
+  /* Glass */
+  --glass: rgb(255 255 255 / 0.65);
+
+  /* Purple glow */
+  --glow: rgb(143 44 244 / 0.25);
+
+  /* =======================================================
+     BACKGROUND
+     ======================================================= */
+
+  --background: #ffffff;
+  --foreground: #151515;
 }
+
+
+/* =========================================================
+   TAILWIND THEME
+   ========================================================= */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --color-white: #ffffff;
+
   --color-ink: var(--ink);
   --color-dark: var(--dark);
   --color-navy: var(--navy);
+
   --color-purple-primary: var(--purple-primary);
   --color-purple-secondary: var(--purple-secondary);
   --color-purple-accent: var(--purple-accent);
+
   --color-muted: var(--muted);
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --font-sans:
+    var(--font-geist-sans),
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+
+  --font-mono:
+    var(--font-geist-mono),
+    ui-monospace,
+    monospace;
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 6rem; background: var(--dark); -webkit-text-size-adjust: 100%; }
-body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); overflow-x: clip; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-::selection { background: var(--purple-accent); color: #fff; }
 
-.eyebrow { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--purple-secondary); }
-.display { font-weight: 600; letter-spacing: -0.055em; line-height: 0.95; }
-.text-gradient { background: linear-gradient(100deg, #fff 0%, #cdb4ff 45%, var(--purple-secondary) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.text-outline { color: transparent; -webkit-text-stroke: 1px rgb(255 255 255 / 0.22); }
-.hairline { background: linear-gradient(90deg, transparent, var(--border-strong), transparent); height: 1px; }
-.grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.07; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
-.bg-grid { background-image: linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px), linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px); background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 20%, transparent 70%); }
-:focus-visible { outline: 2px solid var(--purple-secondary); outline-offset: 3px; border-radius: 6px; }
-@keyframes pulse-ring { 0% { transform: scale(0.6); opacity: 0.7; } 100% { transform: scale(2.4); opacity: 0; } }
-.animate-pulse-ring { animation: pulse-ring 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+/* =========================================================
+   HTML
+   ========================================================= */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+
+  background: #ffffff;
+
+  -webkit-text-size-adjust: 100%;
 }
 
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+  background: #ffffff;
+  color: #151515;
+
+  font-family: var(--font-sans);
+
+  overflow-x: clip;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  text-rendering: optimizeLegibility;
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: var(--purple-accent);
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.eyebrow {
+  font-family: var(--font-mono);
+
+  font-size: 0.6875rem;
+
+  font-weight: 500;
+
+  letter-spacing: 0.22em;
+
+  text-transform: uppercase;
+
+  color: var(--purple-primary);
+}
+
+
+/* =========================================================
+   DISPLAY TYPOGRAPHY
+   ========================================================= */
+
+.display {
+  font-weight: 600;
+
+  letter-spacing: -0.045em;
+
+  line-height: 1.05;
+}
+
+
+/* =========================================================
+   PURPLE TEXT GRADIENT
+   ========================================================= */
+
+.text-gradient {
+  background:
+    linear-gradient(
+      100deg,
+      #4d11a8 0%,
+      #6620ee 40%,
+      #8f2cf4 75%,
+      #a855f7 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+}
+
+
+/* =========================================================
+   PURPLE GRADIENT
+   Used by Hero heading
+   ========================================================= */
+
+.text-purple-gradient {
+  background:
+    linear-gradient(
+      100deg,
+      #4d11a8 0%,
+      #6620ee 40%,
+      #8f2cf4 70%,
+      #a855f7 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  color: transparent;
+}
+
+
+/* =========================================================
+   PURPLE BUTTON GRADIENT
+   ========================================================= */
+
+.bg-purple-gradient {
+  background:
+    linear-gradient(
+      135deg,
+      #4d11a8 0%,
+      #6620ee 45%,
+      #8f2cf4 100%
+    );
+}
+
+
+/* =========================================================
+   PURPLE BORDER GRADIENT
+   ========================================================= */
+
+.border-purple-gradient {
+  border: 1px solid transparent;
+
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(
+      135deg,
+      #4d11a8,
+      #8f2cf4
+    ) border-box;
+}
+
+
+/* =========================================================
+   TEXT OUTLINE
+   ========================================================= */
+
+.text-outline {
+  color: transparent;
+
+  -webkit-text-stroke:
+    1px
+    rgb(21 21 21 / 0.18);
+}
+
+
+/* =========================================================
+   HAIRLINE
+   ========================================================= */
+
+.hairline {
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgb(21 21 21 / 0.12),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   LIGHT HAIRLINE
+   ========================================================= */
+
+.hairline-light {
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 0.25),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   GLASS CARD
+   ========================================================= */
+
+.glass {
+  background: rgb(255 255 255 / 0.72);
+
+  border: 1px solid rgb(21 21 21 / 0.08);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* =========================================================
+   GLASS PURPLE
+   ========================================================= */
+
+.glass-purple {
+  background:
+    linear-gradient(
+      135deg,
+      rgb(255 255 255 / 0.82),
+      rgb(244 236 255 / 0.72)
+    );
+
+  border: 1px solid rgb(143 44 244 / 0.15);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* =========================================================
+   GRAIN
+   ========================================================= */
+
+.grain::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.035;
+
+  mix-blend-mode: multiply;
+
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+
+/* =========================================================
+   GRID BACKGROUND
+   ========================================================= */
+
+.bg-grid {
+  background-image:
+    linear-gradient(
+      rgb(21 21 21 / 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgb(21 21 21 / 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 72px 72px;
+
+  mask-image:
+    radial-gradient(
+      ellipse at 50% 30%,
+      #000 20%,
+      transparent 70%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse at 50% 30%,
+      #000 20%,
+      transparent 70%
+    );
+}
+
+
+/* =========================================================
+   PURPLE GLOW
+   ========================================================= */
+
+.purple-glow {
+  box-shadow:
+    0 0 80px
+    rgb(143 44 244 / 0.18);
+}
+
+
+/* =========================================================
+   PURPLE TEXT GLOW
+   ========================================================= */
+
+.purple-text-glow {
+  text-shadow:
+    0 0 30px
+    rgb(143 44 244 / 0.18);
+}
+
+
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+:focus-visible {
+  outline:
+    2px solid
+    var(--purple-secondary);
+
+  outline-offset: 3px;
+
+  border-radius: 6px;
+}
+
+
+/* =========================================================
+   PULSE RING
+   ========================================================= */
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-ring {
+  animation:
+    pulse-ring
+    2.8s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    infinite;
+}
+
+
+/* =========================================================
+   MARQUEE
+   ========================================================= */
 
 @keyframes marquee {
   from {
@@ -59,11 +441,13 @@ body { background: var(--background); color: var(--foreground); font-family: var
   }
 
   to {
-    transform: translateX(
-      calc(-100% - var(--gap))
-    );
+    transform:
+      translateX(
+        calc(-100% - var(--gap))
+      );
   }
 }
+
 
 @keyframes marquee-vertical {
   from {
@@ -71,20 +455,131 @@ body { background: var(--background); color: var(--foreground); font-family: var
   }
 
   to {
-    transform: translateY(
-      calc(-100% - var(--gap))
-    );
+    transform:
+      translateY(
+        calc(-100% - var(--gap))
+      );
   }
 }
 
+
 .animate-marquee {
-  animation: marquee var(--duration) linear infinite;
+  animation:
+    marquee
+    var(--duration)
+    linear
+    infinite;
 }
 
+
 .animate-marquee-vertical {
-  animation: marquee-vertical var(--duration) linear infinite;
+  animation:
+    marquee-vertical
+    var(--duration)
+    linear
+    infinite;
 }
+
 
 .group-hover\:paused:hover {
   animation-play-state: paused;
+}
+
+
+/* =========================================================
+   PREMIUM TEXT REVEAL
+   ========================================================= */
+
+@keyframes text-reveal {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(40px)
+      scale(0.98);
+
+    filter: blur(10px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+
+    filter: blur(0);
+  }
+}
+
+
+.animate-text-reveal {
+  animation:
+    text-reveal
+    0.9s
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+
+/* =========================================================
+   FLOATING PURPLE GLOW
+   ========================================================= */
+
+@keyframes purple-float {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(0, -18px, 0)
+      scale(1.04);
+  }
+}
+
+
+.animate-purple-float {
+  animation:
+    purple-float
+    7s
+    ease-in-out
+    infinite;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .display {
+    letter-spacing: -0.035em;
+
+    line-height: 1.08;
+  }
 }

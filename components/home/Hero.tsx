@@ -30,7 +30,6 @@ export default function Hero() {
       className="relative flex min-h-[85vh] flex-col justify-center overflow-hidden bg-transparent pb-16 pt-28 md:pt-32"
       aria-label="Introduction"
     >
-
       {/* Ambient Glow */}
       <div
         className="pointer-events-none absolute -right-32 -top-32 z-[2] h-[500px] w-[500px] rounded-full bg-[#F1EAFE]/40 blur-[100px]"
@@ -45,10 +44,13 @@ export default function Hero() {
       {/* Main Content */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8">
-          
-          {/* LEFT SIDE */}
+
+          {/* =====================================================
+              LEFT SIDE
+          ===================================================== */}
+
           <div className="lg:col-span-7">
-            
+
             {/* Eyebrow */}
             <motion.div
               {...enterAnimation(0.1)}
@@ -61,15 +63,110 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* HERO HEADING */}
-            <motion.div {...enterAnimation(0.2)}>
-              <h1 className="max-w-4xl text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-[#151515] sm:text-6xl lg:text-7xl xl:text-[80px]">
-                We Turn Your Brand Into A
-                <span className="text-purple-gradient block">
-                  Revenue Machine
+            {/* =================================================
+                HERO HEADING
+            ================================================= */}
+
+            <div className="max-w-4xl">
+              <h1 className="text-5xl font-bold leading-[1.05] tracking-[-0.04em] text-[#151515] sm:text-6xl lg:text-7xl xl:text-[80px]">
+
+                {/* First line */}
+                <span className="block overflow-hidden">
+                  {["We", "Turn", "Your"].map((word, index) => (
+                    <motion.span
+                      key={word}
+                      initial={
+                        reduce
+                          ? false
+                          : {
+                              opacity: 0,
+                              y: 55,
+                              filter: "blur(8px)",
+                            }
+                      }
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                      }}
+                      transition={{
+                        duration: 0.75,
+                        delay: 0.18 + index * 0.08,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="mr-[0.22em] inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                  ))}
                 </span>
+
+                {/* Second line */}
+                <span className="block overflow-hidden">
+                  {["Brand", "Into", "A"].map((word, index) => (
+                    <motion.span
+                      key={word}
+                      initial={
+                        reduce
+                          ? false
+                          : {
+                              opacity: 0,
+                              y: 55,
+                              filter: "blur(8px)",
+                            }
+                      }
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        filter: "blur(0px)",
+                      }}
+                      transition={{
+                        duration: 0.75,
+                        delay: 0.42 + index * 0.08,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="mr-[0.22em] inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                  ))}
+                </span>
+
+                {/* Purple heading */}
+                <span className="block overflow-hidden">
+                  {["Revenue", "Machine"].map((word, index) => (
+                    <motion.span
+                      key={word}
+                      initial={
+                        reduce
+                          ? false
+                          : {
+                              opacity: 0,
+                              y: 65,
+                              scale: 0.96,
+                              filter: "blur(12px)",
+                            }
+                      }
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        filter: "blur(0px)",
+                      }}
+                      transition={{
+                        duration: 0.9,
+                        delay: 0.68 + index * 0.1,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      className="text-purple-gradient mr-[0.22em] inline-block"
+                    >
+                      {word}
+                    </motion.span>
+                  ))}
+                </span>
+
               </h1>
-            </motion.div>
+            </div>
 
             {/* Description */}
             <div className="mt-6 max-w-xl">
@@ -84,7 +181,7 @@ export default function Hero() {
 
             {/* CTA */}
             <motion.div
-              {...enterAnimation(0.4)}
+              {...enterAnimation(1.15)}
               className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
             >
               {/* Primary */}
@@ -115,7 +212,7 @@ export default function Hero() {
 
             {/* Trust Highlights */}
             <motion.div
-              {...enterAnimation(0.55)}
+              {...enterAnimation(1.35)}
               className="mt-10 flex flex-wrap items-center gap-6 border-t border-[#E7E2EF]/80 pt-6 text-xs font-medium text-[#6B6B73]"
             >
               <div className="flex items-center gap-2">
@@ -144,172 +241,269 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT SIDE */}
+          {/* =====================================================
+              RIGHT SIDE
+          ===================================================== */}
+
           <div className="flex justify-center lg:col-span-5 lg:justify-end">
+
             <motion.div
               initial={
                 reduce
                   ? false
                   : {
                       opacity: 0,
-                      scale: 0.94,
-                      y: 20,
+                      scale: 0.86,
+                      y: 35,
+                      rotateX: 8,
+                      filter: "blur(8px)",
                     }
               }
               animate={{
                 opacity: 1,
                 scale: 1,
                 y: 0,
+                rotateX: 0,
+                filter: "blur(0px)",
               }}
               transition={{
-                duration: 0.8,
-                delay: 0.3,
-                ease: EASE,
+                duration: 1,
+                delay: 0.35,
+                ease: [0.22, 1, 0.36, 1],
               }}
-              className="relative w-full max-w-md overflow-hidden rounded-[30px] border border-[#D8BFF8] bg-gradient-to-br from-white/90 via-[#F5E9FF]/90 to-[#E2C7FF]/90 p-8 shadow-[0_25px_60px_rgba(126,34,206,0.18)] backdrop-blur-md"
+              className="relative w-full max-w-md"
             >
+
               {/* Card Glow */}
-              <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#A855F7]/20 blur-[90px]" />
+              <motion.div
+                initial={
+                  reduce
+                    ? false
+                    : {
+                        opacity: 0,
+                        scale: 0.5,
+                      }
+                }
+                animate={{
+                  opacity: 0.65,
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 1.2,
+                  delay: 0.55,
+                  ease: EASE,
+                }}
+                className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-40 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9333EA]/20 blur-[70px]"
+              />
 
-              <div className="pointer-events-none absolute -bottom-32 -left-24 h-72 w-72 rounded-full bg-[#7C3AED]/15 blur-[90px]" />
+              {/* Card */}
+              <motion.div
+                animate={
+                  reduce
+                    ? undefined
+                    : {
+                        y: [0, -6, 0],
+                      }
+                }
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="relative w-full max-w-md overflow-hidden rounded-[30px] border border-[#D8BFF8] bg-gradient-to-br from-white/90 via-[#F5E9FF]/90 to-[#E2C7FF]/90 p-8 shadow-[0_25px_60px_rgba(126,34,206,0.18)] backdrop-blur-md"
+              >
 
-              {/* Card Header */}
-              <div className="relative z-10 mb-8 flex items-center justify-between">
-                <span className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#4D11A8]">
-                  Agency Identity
-                </span>
+                {/* Card Glow */}
+                <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#A855F7]/20 blur-[90px]" />
 
-                <span className="rounded-full bg-[#7C3AED]/10 px-3 py-1.5 font-mono text-[10px] font-semibold text-[#4D11A8]">
-                  Dubai · UAE
-                </span>
-              </div>
+                <div className="pointer-events-none absolute -bottom-32 -left-24 h-72 w-72 rounded-full bg-[#7C3AED]/15 blur-[90px]" />
 
-              {/* Logo */}
-              <div className="relative z-10 flex min-h-[210px] items-center justify-center">
+                {/* Card Header */}
                 <motion.div
                   initial={
                     reduce
                       ? false
                       : {
                           opacity: 0,
-                          scale: 0.8,
-                          y: 20,
+                          y: 12,
                         }
                   }
                   animate={{
                     opacity: 1,
-                    scale: 1,
                     y: 0,
                   }}
                   transition={{
-                    duration: 0.9,
-                    delay: 0.45,
+                    duration: 0.6,
+                    delay: 0.55,
                     ease: EASE,
                   }}
-                  className="relative w-full max-w-[460px]"
+                  className="relative z-10 mb-8 flex items-center justify-between"
                 >
-                  <div className="absolute left-1/2 top-1/2 -z-10 h-32 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9333EA]/20 blur-[60px]" />
+                  <span className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#4D11A8]">
+                    Agency Identity
+                  </span>
 
-                  <motion.img
-                    src="/brand/logo-horizontal.svg"
-                    alt="ZironPro"
-                    draggable={false}
-                    className="relative z-10 h-auto w-full select-none object-contain"
+                  <span className="rounded-full bg-[#7C3AED]/10 px-3 py-1.5 font-mono text-[10px] font-semibold text-[#4D11A8]">
+                    Dubai · UAE
+                  </span>
+                </motion.div>
+
+                {/* Logo */}
+                <div className="relative z-10 flex min-h-[210px] items-center justify-center">
+
+                  <motion.div
                     initial={
                       reduce
                         ? false
                         : {
                             opacity: 0,
-                            filter: "blur(8px)",
+                            scale: 0.78,
+                            y: 25,
+                            filter: "blur(10px)",
                           }
                     }
                     animate={{
                       opacity: 1,
+                      scale: 1,
+                      y: 0,
                       filter: "blur(0px)",
                     }}
                     transition={{
-                      duration: 0.8,
+                      duration: 0.9,
                       delay: 0.6,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="relative w-full max-w-[460px]"
+                  >
+
+                    <div className="absolute left-1/2 top-1/2 -z-10 h-32 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9333EA]/20 blur-[60px]" />
+
+                    <motion.img
+                      src="/brand/logo-horizontal.svg"
+                      alt="ZironPro"
+                      draggable={false}
+                      className="relative z-10 h-auto w-full select-none object-contain"
+                      initial={
+                        reduce
+                          ? false
+                          : {
+                              opacity: 0,
+                              filter: "blur(8px)",
+                            }
+                      }
+                      animate={{
+                        opacity: 1,
+                        filter: "blur(0px)",
+                      }}
+                      transition={{
+                        duration: 0.8,
+                        delay: 0.78,
+                        ease: EASE,
+                      }}
+                    />
+
+                  </motion.div>
+                </div>
+
+                {/* Divider */}
+                <motion.div
+                  initial={
+                    reduce
+                      ? false
+                      : {
+                          scaleX: 0,
+                          opacity: 0,
+                        }
+                  }
+                  animate={{
+                    scaleX: 1,
+                    opacity: 1,
+                  }}
+                  transition={{
+                    duration: 0.65,
+                    delay: 0.85,
+                    ease: EASE,
+                  }}
+                  className="relative z-10 my-5 origin-left border-t border-[#D8C5EC]"
+                />
+
+                {/* Stats */}
+                <div className="relative z-10 grid grid-cols-2 gap-4">
+
+                  {/* SEO */}
+                  <motion.div
+                    initial={
+                      reduce
+                        ? false
+                        : {
+                            opacity: 0,
+                            y: 18,
+                            scale: 0.96,
+                          }
+                    }
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                    }}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.95,
                       ease: EASE,
                     }}
-                  />
-                </motion.div>
-              </div>
+                    className="rounded-2xl border border-[#E5DDF0] bg-white/80 p-4 shadow-[0_8px_20px_rgba(77,17,168,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]"
+                  >
+                    <p className="font-mono text-xs font-semibold text-[#6B6B73]">
+                      SEO Growth
+                    </p>
 
-              {/* Divider */}
-              <div className="relative z-10 my-5 border-t border-[#D8C5EC]" />
+                    <p className="mt-1 text-3xl font-bold tracking-tight text-[#4D11A8]">
+                      +600%
+                    </p>
 
-              {/* Stats */}
-              <div className="relative z-10 grid grid-cols-2 gap-4">
-                
-                {/* SEO */}
-                <motion.div
-                  initial={
-                    reduce
-                      ? false
-                      : {
-                          opacity: 0,
-                          y: 15,
-                        }
-                  }
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.8,
-                    ease: EASE,
-                  }}
-                  className="rounded-2xl border border-[#E5DDF0] bg-white/80 p-4 shadow-[0_8px_20px_rgba(77,17,168,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]"
-                >
-                  <p className="font-mono text-xs font-semibold text-[#6B6B73]">
-                    SEO Growth
-                  </p>
+                    <p className="mt-1 text-[11px] text-[#6B6B73]">
+                      Organic Traffic
+                    </p>
+                  </motion.div>
 
-                  <p className="mt-1 text-3xl font-bold tracking-tight text-[#4D11A8]">
-                    +600%
-                  </p>
+                  {/* Paid Media */}
+                  <motion.div
+                    initial={
+                      reduce
+                        ? false
+                        : {
+                            opacity: 0,
+                            y: 18,
+                            scale: 0.96,
+                          }
+                    }
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                    }}
+                    transition={{
+                      duration: 0.6,
+                      delay: 1.05,
+                      ease: EASE,
+                    }}
+                    className="rounded-2xl border border-[#E5DDF0] bg-white/80 p-4 shadow-[0_8px_20px_rgba(77,17,168,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]"
+                  >
+                    <p className="font-mono text-xs font-semibold text-[#6B6B73]">
+                      Paid Media
+                    </p>
 
-                  <p className="mt-1 text-[11px] text-[#6B6B73]">
-                    Organic Traffic
-                  </p>
-                </motion.div>
+                    <p className="mt-1 text-3xl font-bold tracking-tight text-[#8F2CF4]">
+                      5X
+                    </p>
 
-                {/* Paid Media */}
-                <motion.div
-                  initial={
-                    reduce
-                      ? false
-                      : {
-                          opacity: 0,
-                          y: 15,
-                        }
-                  }
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.9,
-                    ease: EASE,
-                  }}
-                  className="rounded-2xl border border-[#E5DDF0] bg-white/80 p-4 shadow-[0_8px_20px_rgba(77,17,168,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(77,17,168,0.14)]"
-                >
-                  <p className="font-mono text-xs font-semibold text-[#6B6B73]">
-                    Paid Media
-                  </p>
+                    <p className="mt-1 text-[11px] text-[#6B6B73]">
+                      Lead Volume
+                    </p>
+                  </motion.div>
 
-                  <p className="mt-1 text-3xl font-bold tracking-tight text-[#8F2CF4]">
-                    5X
-                  </p>
-
-                  <p className="mt-1 text-[11px] text-[#6B6B73]">
-                    Lead Volume
-                  </p>
-                </motion.div>
-              </div>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
