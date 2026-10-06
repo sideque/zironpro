@@ -57,10 +57,6 @@ export default function Navbar() {
         Skip to content
       </a>
 
-      {/* =========================================================
-          NAVBAR
-      ========================================================== */}
-
       <motion.header
         initial={{
           y: -40,
@@ -117,7 +113,7 @@ export default function Navbar() {
             className="shrink-0"
           >
             <Image
-              src="/brand/logo-horizontal.svg"
+              src="/brand/nav-logo.svg"
               alt="ZironPro"
               width={757}
               height={221}
